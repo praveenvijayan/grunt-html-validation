@@ -24,7 +24,8 @@
     help: 'cyan',
     warn: 'yellow',
     debug: 'blue',
-    error: 'red'
+    error: 'red',
+    blue: 'blue'
   });
 
   var htmlContent = "",
