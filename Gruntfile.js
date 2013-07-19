@@ -52,6 +52,16 @@ module.exports = function(grunt) {
     nodeunit: {
       tests: ['test/*_test.js'],
     },
+    validation: { // Grunt w3c validation plugin
+        options: {
+            reset: grunt.option('reset') || false
+        },
+        files: {
+            src: ['html/*.html', 
+                '!html/index.html', 
+                '!html/404.html']
+        }
+    }
 
   });
 
@@ -62,10 +72,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-html-validation');
+  
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'html_validation', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'validation', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
