@@ -28,26 +28,6 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
-    // Configuration to be run (and then tested).
-    html_validation: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-    },
-
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js'],
@@ -57,9 +37,9 @@ module.exports = function(grunt) {
             reset: grunt.option('reset') || false
         },
         files: {
-            src: ['html/*.html', 
-                '!html/index.html', 
-                '!html/404.html']
+            src: ['test/html/*.html', 
+                '!test/html/index.html', 
+                '!test/html/404.html']
         }
     }
 
@@ -72,12 +52,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-html-validation');
+  // grunt.loadNpmTasks('grunt-html-validation');
   
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'validation', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

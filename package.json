@@ -2,7 +2,7 @@
   "name": "grunt-html-validation",
   "description": "W3C html validaton grunt plugin",
   "version": "0.1.2",
-  "homepage": "https://github.com/praveen/grunt-html-validation",
+  "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
   "author": {
     "name": "praveenvijayan",
     "email": "praveenv.vijayan@gmail.com",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/praveen/grunt-html-validation.git"
+    "url": "git://github.com/praveenvijayan/grunt-html-validation.git"
   },
   "bugs": {
-    "url": "https://github.com/praveen/grunt-html-validation/issues"
+    "url": "https://github.com/praveenvijayan/grunt-html-validation/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/praveen/grunt-html-validation/blob/master/LICENSE-MIT"
+      "url": "https://github.com/praveenvijayan/grunt-html-validation/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
