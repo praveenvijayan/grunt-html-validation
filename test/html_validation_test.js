@@ -6,11 +6,8 @@ exports.validation = {
   setUp: function(done) {
     // setup here if necessary
     done();
-  }
+  },
   mainTest: function (test) {
-    
-    
-
     test.done();
   }
 };
