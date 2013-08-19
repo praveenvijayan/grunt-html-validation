@@ -1,0 +1,11 @@
+[{
+	"filename": "test/html/home.html",
+	"error": [{
+		"lastLine": 8,
+		"lastColumn": 23,
+		"message": "Element title must not be empty.",
+		"messageid": "html5",
+		"explanation": "    <p class=\"helpwanted\">\n      <a\n        href=\"feedback.html?uri=;errmsg_id=html5#errormsg\"\n\ttitle=\"Suggest improvements on this error message through our feedback channels\" \n      >&#x2709;</a>\n    </p>\n",
+		"type": "error"
+	}]
+}]

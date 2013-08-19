@@ -49,7 +49,13 @@ Default value: `'validation-staus.json'`
 
 Default file for storing validation information.
 
-#### options.stoponerror
+#### options.reportpath
+Type: `String`
+Default value: `validation-report.json`
+
+Consolidated report in JSON format. 
+
+#### options.validation
 Type: `Boolean`
 Default value: `false`
 
@@ -76,6 +82,6 @@ validation: {
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
- * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option. 
+ * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
  * 2013-08-05   v0.1.2   Fixed issues.
  * 2013-04-20   v0.1.0   Initial release.

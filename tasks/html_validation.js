@@ -43,12 +43,14 @@ module.exports = function(grunt) {
 		fileStat = {},
 		isModified,
 		fileCount = 0,
-		validsettings = "";
+		validsettings = "",
+		reportArry = [];
 
 	grunt.registerMultiTask('validation', 'HTML W3C validation.', function() {
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options = this.options({
 			path: "validation-status.json",
+			reportpath: "validation-report.json",
 			reset: false,
 			stoponerror:false
 		});
@@ -67,6 +69,18 @@ module.exports = function(grunt) {
 			console.log(nomsg + msg.nofile.error);
 		}
 
+		var addToReport = function (fname, status) {
+			
+			var report = {};
+
+			report.filename = fname;
+			report.error = status;
+
+			// console.log(report)
+
+			reportArry.push(report);
+		}
+
 		var validate = function(files) {
 
 			if (files.length) {
@@ -78,6 +92,7 @@ module.exports = function(grunt) {
 
 				if (currFileStat) {
 					console.log(msg.validFile.green + files[counter]);
+					addToReport(files[counter], false);
 					counter++;
 					validate(files);
 					return;
@@ -92,6 +107,8 @@ module.exports = function(grunt) {
 					//file: 'http://html5boilerplate.com/',
 					output: 'json', // Defaults to 'json', other option includes html
 					callback: function(res) {
+
+						// var report = {};
 
 						if (!res.messages) {
 							console.log(msg.networkError.error);
@@ -112,26 +129,42 @@ module.exports = function(grunt) {
 							readSettings[files[counter]] = false;
 							console.log("No of errors: ".error + res.messages.length);
 
-						if(options.stoponerror){
-							done();
-							return;
-						}
+							addToReport(files[counter], res.messages);
+							// report.filename = files[counter];
+							// report.errors = res.messages;
+
+							if(options.stoponerror){
+								done();
+								return;
+							}
 
 						} else {
 
 							readSettings[files[counter]] = true;
 							grunt.log.ok(msg.ok.green);
 
+							addToReport(files[counter], false);
+
+							// report.filename = files[counter];
+							// report.errors = false;
+
 						}
+
+						// reportArry.push(report);
 
 						grunt.file.write(options.path, JSON.stringify(readSettings));
 
 						// depending on the output type, res will either be a json object or a html string
 						// console.log(arryFile);
 						counter++;
+
 						if (counter === flen) {
+
+							grunt.file.write(options.reportpath, JSON.stringify(reportArry));
+							console.log("Validation report generated: ".green +  options.reportpath)
 							done();
 						}
+
 						validate(files);
 					}
 				});
