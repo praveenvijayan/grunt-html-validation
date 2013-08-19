@@ -49,7 +49,7 @@ Default value: `'validation-staus.json'`
 
 Default file for storing validation information.
 
-#### options.toponerror
+#### options.stoponerror
 Type: `Boolean`
 Default value: `false`
 
