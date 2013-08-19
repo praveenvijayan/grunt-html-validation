@@ -49,12 +49,19 @@ Default value: `'validation-staus.json'`
 
 Default file for storing validation information.
 
+#### options.toponerror
+Type: `Boolean`
+Default value: `false`
+
+When hit by a validation error, html-validator continue validating next file by default and this process continues until all files in the list completes validation. If 'toponerror' set to  `true`, validator will stop validating next file.
+
 ### Usage Examples
 
 ```js
 validation: {
     options: {
-        reset: grunt.option('reset') || false
+        reset: grunt.option('reset') || false,
+        toponerror: false
     },
     files: {
         src: ['<%= yeoman.app %>/*.html', 

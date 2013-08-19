@@ -34,7 +34,8 @@ module.exports = function(grunt) {
     },
     validation: { // Grunt w3c validation plugin
         options: {
-            reset: grunt.option('reset') || false
+            reset: grunt.option('reset') || false,
+            stoponerror:true
         },
         files: {
             src: ['test/html/*.html', 

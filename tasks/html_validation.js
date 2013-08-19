@@ -49,7 +49,8 @@ module.exports = function(grunt) {
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options = this.options({
 			path: "validation-status.json",
-			reset: false
+			reset: false,
+			stoponerror:false
 		});
 
 		var done = this.async(),
@@ -63,7 +64,7 @@ module.exports = function(grunt) {
 
 		if(!flen){
 			var nomsg = this.data.src;
-			console.log(nomsg + msg.nofile.error)
+			console.log(nomsg + msg.nofile.error);
 		}
 
 		var validate = function(files) {
@@ -110,6 +111,11 @@ module.exports = function(grunt) {
 
 							readSettings[files[counter]] = false;
 							console.log("No of errors: ".error + res.messages.length);
+
+						if(options.stoponerror){
+							done();
+							return;
+						}
 
 						} else {
 
