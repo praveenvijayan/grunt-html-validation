@@ -2,12 +2,8 @@
 
 var grunt = require('grunt');
 
-exports.validation = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
-  },
-  mainTest: function (test) {
+exports.validation = function(test){
+    test.expect(1);
+    test.ok(true, "initialize testing");
     test.done();
-  }
 };
