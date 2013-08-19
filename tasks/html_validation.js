@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 			path: "validation-status.json",
 			reportpath: "validation-report.json",
 			reset: false,
-			stoponerror:false
+			stoponerror: false
 		});
 
 		var done = this.async(),
@@ -64,22 +64,17 @@ module.exports = function(grunt) {
 			grunt.file.write(options.path, '{}');
 		}
 
-		if(!flen){
+		if (!flen) {
 			var nomsg = this.data.src;
 			console.log(nomsg + msg.nofile.error);
 		}
 
-		var addToReport = function (fname, status) {
-			
+		var addToReport = function(fname, status) {
 			var report = {};
-
 			report.filename = fname;
 			report.error = status;
-
-			// console.log(report)
-
 			reportArry.push(report);
-		}
+		};
 
 		var validate = function(files) {
 
@@ -98,7 +93,7 @@ module.exports = function(grunt) {
 					return;
 				}
 
-				if(files[counter] !== undefined){
+				if (files[counter] !== undefined) {
 					console.log(msg.start + files[counter]);
 				}
 
@@ -130,10 +125,8 @@ module.exports = function(grunt) {
 							console.log("No of errors: ".error + res.messages.length);
 
 							addToReport(files[counter], res.messages);
-							// report.filename = files[counter];
-							// report.errors = res.messages;
 
-							if(options.stoponerror){
+							if (options.stoponerror) {
 								done();
 								return;
 							}
@@ -145,23 +138,16 @@ module.exports = function(grunt) {
 
 							addToReport(files[counter], false);
 
-							// report.filename = files[counter];
-							// report.errors = false;
-
 						}
 
-						// reportArry.push(report);
-
 						grunt.file.write(options.path, JSON.stringify(readSettings));
-
 						// depending on the output type, res will either be a json object or a html string
-						// console.log(arryFile);
 						counter++;
 
 						if (counter === flen) {
 
 							grunt.file.write(options.reportpath, JSON.stringify(reportArry));
-							console.log("Validation report generated: ".green +  options.reportpath)
+							console.log("Validation report generated: ".green + options.reportpath);
 							done();
 						}
 
