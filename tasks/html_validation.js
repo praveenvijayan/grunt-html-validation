@@ -36,7 +36,8 @@ module.exports = function(grunt) {
 			ok: "Validation successful..",
 			start: "Validation started for.. ",
 			networkError: 'Network error re-validating..',
-			validFile: "Validated skipping.."
+			validFile: "Validated skipping..",
+			nofile: ":- No file is specified in the path!"
 		},
 		len,
 		fileStat = {},
@@ -47,7 +48,7 @@ module.exports = function(grunt) {
 	grunt.registerMultiTask('validation', 'HTML W3C validation.', function() {
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options = this.options({
-			path: "validation-staus.json",
+			path: "validation-status.json",
 			reset: false
 		});
 
@@ -60,8 +61,15 @@ module.exports = function(grunt) {
 			grunt.file.write(options.path, '{}');
 		}
 
+		if(!flen){
+			var nomsg = this.data.src;
+			console.log(nomsg + msg.nofile.error)
+		}
+
 		var validate = function(files) {
+
 			if (files.length) {
+
 				if (grunt.file.exists(options.path)) {
 					readSettings = grunt.file.readJSON(options.path);
 				}
@@ -74,7 +82,9 @@ module.exports = function(grunt) {
 					return;
 				}
 
-				console.log(msg.start + files[counter]);
+				if(files[counter] !== undefined){
+					console.log(msg.start + files[counter]);
+				}
 
 				var results = w3cjs.validate({
 					file: files[counter], // file can either be a local file or a remote file
@@ -113,7 +123,7 @@ module.exports = function(grunt) {
 						// depending on the output type, res will either be a json object or a html string
 						// console.log(arryFile);
 						counter++;
-						if (counter === flen - 1) {
+						if (counter === flen) {
 							done();
 						}
 						validate(files);
