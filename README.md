@@ -1,5 +1,7 @@
 # grunt-html-validation [![Build Status](https://travis-ci.org/praveenvijayan/grunt-html-validation.png?branch=master)](https://travis-ci.org/praveenvijayan/grunt-html-validation)
 
+[![NPM](https://nodei.co/npm/grunt-html-validation.png?downloads=true)](https://nodei.co/npm/grunt-html-validation/)
+
 > W3C html validaton grunt plugin. Validate all files in a directory automatically. 
 
 ## Getting Started
