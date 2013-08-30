@@ -1,7 +1,7 @@
 {
   "name": "grunt-html-validation",
   "description": "W3C html validaton grunt plugin",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
   "author": {
     "name": "praveenvijayan",
@@ -34,9 +34,10 @@
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt": "~0.4.1"
   },
-  "dependencies":{
+  "dependencies": {
     "w3cjs": "~0.1.9",
-    "colors": "~0.6.0"
+    "colors": "~0.6.0",
+    "request": "~2.27.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"

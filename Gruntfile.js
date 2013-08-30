@@ -35,7 +35,15 @@ module.exports = function(grunt) {
     validation: { // Grunt w3c validation plugin
         options: {
             reset: grunt.option('reset') || false,
-            stoponerror:false
+            stoponerror:false,
+            remotePath: "http://decodize.com/",
+            // remoteFiles: ["html/slidemote-universal-remote-control-for-html5-presentations",
+            //               "GAE/linktomob-share-your-links-quickly-and-easily-on-mobile-devices/",
+            //               "html/getting-started-with-yeoman-1-dot-0-beta-on-windows/",
+            //               "html/moving-from-wordpress-to-octopress/",
+            //               "css/site-preloading-methods/",
+            //               "html/sublime-text-2-bidirectional-language-support-plugin/"]
+            remoteFiles: "validation-files.json"
         },
         files: {
             src: ['test/html/*.html', 

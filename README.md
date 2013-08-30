@@ -57,11 +57,43 @@ Default value: `validation-report.json`
 
 Consolidated report in JSON format. 
 
-#### options.validation
+#### options.stoponerror
 Type: `Boolean`
 Default value: `false`
 
-When hit by a validation error, html-validator continue validating next file by default and this process continues until all files in the list completes validation. If 'toponerror' set to  `true`, validator will stop validating next file.
+When hit by a validation error, html-validator continue validating next file by default and this process continues until all files in the list completes validation. If 'stoponerror' set to  `true`, validator will stop validating next file.
+
+#### options.maxTry
+Type: `Number`
+Default value: `3`
+
+Number of retries when network error occuers. In default case, after 3 reties validator move to next file.
+
+#### options.remotePath
+Type: `String`
+Default value: ``
+
+Remote base url path. eg: "http://decodize.com/". 
+
+
+#### options.remoteFiles
+Type: `Array`
+Default value: ``
+
+Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified. 
+
+eg: remoteFiles: ["html/moving-from-wordpress-to-octopress/",
+                      "css/site-preloading-methods/"]
+
+you can also provide a file contains array of pages.
+
+remoteFiles: "validation-files.json"
+
+```js
+["html/getting-started-with-yeoman-1-dot-0-beta-on-windows",
+"html/slidemote-universal-remote-control-for-html5-presentations/",
+"html/simple-responsive-image-technique/"]
+```
 
 ### Usage Examples
 
@@ -69,7 +101,11 @@ When hit by a validation error, html-validator continue validating next file by 
 validation: {
     options: {
         reset: grunt.option('reset') || false,
-        toponerror: false
+        toponerror: false,
+        remotePath: "http://decodize.com/",
+        remoteFiles: ["html/moving-from-wordpress-to-octopress/",
+                      "css/site-preloading-methods/"], //or
+        remoteFiles: "validation-files.json" // JSON file contains array of page paths.  
     },
     files: {
         src: ['<%= yeoman.app %>/*.html', 
@@ -83,7 +119,10 @@ validation: {
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
+
 ## Release History
+ * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.  
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
  * 2013-08-05   v0.1.2   Fixed issues.
  * 2013-04-20   v0.1.0   Initial release.

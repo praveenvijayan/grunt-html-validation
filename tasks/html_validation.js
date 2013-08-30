@@ -2,7 +2,7 @@
  * grunt-html-validation
  * https://github.com/praveen/grunt-html-validation
  *
- * Copyright (c) 2013 praveenvijayan
+ * Copyright (c) 2013 Praveen Vijayan
  * Licensed under the MIT license.
  */
 
@@ -13,6 +13,9 @@ module.exports = function(grunt) {
 	var w3cjs = require('w3cjs');
 	var colors = require('colors');
 	var fs = require('fs');
+	var path = require('path');
+	var request = require('request');
+	var rval = require('../lib/remoteval');
 
 	colors.setTheme({
 		silly: 'rainbow',
@@ -34,17 +37,23 @@ module.exports = function(grunt) {
 		msg = {
 			error: "Something went wrong",
 			ok: "Validation successful..",
-			start: "Validation started for.. ",
-			networkError: 'Network error re-validating..',
+			start: "Validation started for.. ".info,
+			networkError: 'Network error re-validating..'.error,
 			validFile: "Validated skipping..",
-			nofile: ":- No file is specified in the path!"
+			nofile: ":- No file is specified in the path!",
+			nextfile: "Skipping to next file..".verbose,
+			eof: "End of File..".verbose,
+			fileNotFound: "File not found..".error,
+			remotePathError: "Remote path ".error + "(options->remotePath) ".grey + "is mandatory when remote files ".error+"(options-> remoteFiles) ".grey+"are specified!".error
 		},
 		len,
 		fileStat = {},
 		isModified,
 		fileCount = 0,
 		validsettings = "",
-		reportArry = [];
+		reportArry =[],
+		retryCount = 0,
+		reportFilename = "";
 
 	grunt.registerMultiTask('validation', 'HTML W3C validation.', function() {
 		// Merge task-specific and/or target-specific options with these defaults.
@@ -52,14 +61,25 @@ module.exports = function(grunt) {
 			path: "validation-status.json",
 			reportpath: "validation-report.json",
 			reset: false,
-			stoponerror: false
+			stoponerror: false,
+			remotePath: false,
+			maxTry: 3
 		});
 
 		var done = this.async(),
 			files = grunt.file.expand(this.filesSrc),
 			flen = files.length,
-			readSettings = {};
+			readSettings = {},
+			remoteArry = [];
 
+		//Remote file validation
+		var makeFileList  = function (files) {
+			return files.map(function(file){
+				return options.remotePath + file;
+			});
+		}
+
+		//Reset current validation status and start from scratch.
 		if (options.reset) {
 			grunt.file.write(options.path, '{}');
 		}
@@ -87,26 +107,42 @@ module.exports = function(grunt) {
 
 				if (currFileStat) {
 					console.log(msg.validFile.green + files[counter]);
-					addToReport(files[counter], false);
+					reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
+					addToReport(reportFilename, false);
 					counter++;
 					validate(files);
 					return;
 				}
 
 				if (files[counter] !== undefined) {
-					console.log(msg.start + files[counter]);
+
+					var filename = options.remoteFiles ? dummyFile[counter] : files[counter];
+
+					console.log(msg.start + filename);
 				}
 
 				var results = w3cjs.validate({
 					file: files[counter], // file can either be a local file or a remote file
-					//file: 'http://html5boilerplate.com/',
+					// file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
 					output: 'json', // Defaults to 'json', other option includes html
 					callback: function(res) {
 
-						// var report = {};
+						flen = files.length;
 
 						if (!res.messages) {
-							console.log(msg.networkError.error);
+							++retryCount;
+							var netErrorMsg = msg.networkError +  " " + retryCount.toString().error +" ";
+							if(retryCount === options.maxTry){
+								counter++;
+								if(counter !==flen){
+									netErrorMsg += msg.nextfile
+								}else{
+									netErrorMsg += msg.eof
+								}
+								retryCount = 0;
+							}
+						
+							console.log(netErrorMsg);
 							validate(files);
 							return;
 						}
@@ -124,7 +160,8 @@ module.exports = function(grunt) {
 							readSettings[files[counter]] = false;
 							console.log("No of errors: ".error + res.messages.length);
 
-							addToReport(files[counter], res.messages);
+							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
+							addToReport(reportFilename, res.messages);
 
 							if (options.stoponerror) {
 								done();
@@ -136,7 +173,8 @@ module.exports = function(grunt) {
 							readSettings[files[counter]] = true;
 							grunt.log.ok(msg.ok.green);
 
-							addToReport(files[counter], false);
+							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
+							addToReport(reportFilename, false);
 
 						}
 
@@ -145,19 +183,70 @@ module.exports = function(grunt) {
 						counter++;
 
 						if (counter === flen) {
-
 							grunt.file.write(options.reportpath, JSON.stringify(reportArry));
 							console.log("Validation report generated: ".green + options.reportpath);
 							done();
 						}
 
-						validate(files);
+						if (options.remoteFiles) {
+							if(counter === flen) return;
+
+							rval(dummyFile[counter], function(){
+								validate(files);
+							});
+
+						}else{
+							validate(files);
+						}	
 					}
 				});
 			}
 		};
 
-		validate(files);
+		/*Remote validation 
+		*Note on Remote validation.
+		* W3Cjs supports remote file validation but due to some reasons it is not working as expected. Local file validation is working perfectly. To overcome this remote page is fetch using 'request' npm module and write page content in '_tempvlidation.html' file and validates as local file. 
+		*/
+
+		if(!options.remotePath && options.remoteFiles){
+			console.log(msg.remotePathError)
+			return;
+		};
+
+		if(options.remotePath && options.remotePath !== ""){
+			files = makeFileList(files)
+		}
+
+		if(options.remoteFiles){
+
+			if(typeof options.remoteFiles === 'object' && options.remoteFiles.length && options.remoteFiles[0] !=='' ){
+				files = options.remoteFiles;
+				
+			}else{
+				files = grunt.file.readJSON(options.remoteFiles);
+			}	
+
+			files = makeFileList(files);
+
+			var dummyFile = files;
+
+			files = [];
+
+			for (var i = 0; i < dummyFile.length; i++) {
+				files.push('_tempvlidation.html');
+			};
+
+			rval(dummyFile[counter], function(){
+				validate(files);
+			});
+
+			return;
+		}
+
+		if(!options.remoteFiles){
+			validate(files);
+		}
+
 
 	});
 
