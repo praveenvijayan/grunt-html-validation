@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 			readSettings = {},
 			remoteArry = [];
 
-		//Remote file validation
+		
 		var makeFileList  = function (files) {
 			return files.map(function(file){
 				return options.remotePath + file;
