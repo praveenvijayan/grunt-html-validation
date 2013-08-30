@@ -41,36 +41,43 @@ grunt.initConfig({
 
 #### options.reset
 Type: `Boolean`
+
 Default value: `'false'`
 
-Resets all the validated  files status. When want to revalidate all the validated files - eg: sudo grunt validate --reset=true
+Resets all the validated  files status. When want to revalidate all the validated files - 
+`eg: sudo grunt validate --reset=true`
 
 #### options.path
 Type: `String`
+
 Default value: `'validation-staus.json'`
 
 Default file for storing validation information.
 
 #### options.reportpath
 Type: `String`
+
 Default value: `validation-report.json`
 
 Consolidated report in JSON format. 
 
 #### options.stoponerror
 Type: `Boolean`
+
 Default value: `false`
 
 When hit by a validation error, html-validator continue validating next file by default and this process continues until all files in the list completes validation. If 'stoponerror' set to  `true`, validator will stop validating next file.
 
 #### options.maxTry
 Type: `Number`
+
 Default value: `3`
 
-Number of retries when network error occuers. In default case, after 3 reties validator move to next file.
+Number of retries when network error occuers. Default case, after 3 reties validator will move to next file.
 
 #### options.remotePath
 Type: `String`
+
 Default value: ``
 
 Remote base url path. eg: "http://decodize.com/". 
@@ -78,6 +85,7 @@ Remote base url path. eg: "http://decodize.com/".
 
 #### options.remoteFiles
 Type: `Array`
+
 Default value: ``
 
 Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified. 
