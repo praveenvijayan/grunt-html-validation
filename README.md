@@ -127,3 +127,7 @@ Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/iss
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
  * 2013-08-05   v0.1.2   Fixed issues.
  * 2013-04-20   v0.1.0   Initial release.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/praveenvijayan/grunt-html-validation/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
