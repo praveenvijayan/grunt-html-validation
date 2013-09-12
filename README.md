@@ -26,7 +26,7 @@ In your project's Gruntfile, add a section named `html_validation` to the data o
 
 ```js
 grunt.initConfig({
-  html_validation: {
+  validation: {
     options: {
       // Task-specific options go here.
     },
