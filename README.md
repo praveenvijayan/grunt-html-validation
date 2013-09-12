@@ -102,7 +102,7 @@ remoteFiles: "validation-files.json"
 validation: {
     options: {
         reset: grunt.option('reset') || false,
-        toponerror: false,
+        stoponerror: false,
         remotePath: "http://decodize.com/",
         remoteFiles: ["html/moving-from-wordpress-to-octopress/",
                       "css/site-preloading-methods/"], //or
