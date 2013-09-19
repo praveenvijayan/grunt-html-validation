@@ -48,7 +48,7 @@ Resets all the validated  files status. When want to revalidate all the validate
 
 #### options.path
 Type: `String` <br/>
-Default value: `'validation-staus.json'`
+Default value: `'validation-status.json'`
 
 Default file for storing validation information.
 
