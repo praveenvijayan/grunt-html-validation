@@ -26,14 +26,14 @@ In your project's Gruntfile, add a section named `html_validation` to the data o
 
 ```js
 grunt.initConfig({
-  validation: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+	validation: {
+		options: {
+			// Task-specific options go here.
+		},
+		your_target: {
+			// Target-specific file lists and/or options go here.
+		},
+	},
 })
 ```
 
@@ -84,7 +84,7 @@ Default value: ``
 Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified. 
 
 eg: remoteFiles: ["html/moving-from-wordpress-to-octopress/",
-                      "css/site-preloading-methods/"]
+											"css/site-preloading-methods/"]
 
 you can also provide a file contains array of pages.
 
@@ -111,21 +111,21 @@ relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta
 
 ```js
 validation: {
-    options: {
-        reset: grunt.option('reset') || false,
-        stoponerror: false,
-        remotePath: "http://decodize.com/",
-        remoteFiles: ["html/moving-from-wordpress-to-octopress/",
-                      "css/site-preloading-methods/"], //or
-        remoteFiles: "validation-files.json", // JSON file contains array of page paths. 
-        relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
-    },
-    files: {
-        src: ['<%= yeoman.app %>/*.html', 
-            '!<%= yeoman.app %>/index.html', 
-            '!<%= yeoman.app %>/modules.html',
-            '!<%= yeoman.app %>/404.html']
-    }
+		options: {
+				reset: grunt.option('reset') || false,
+				stoponerror: false,
+				remotePath: "http://decodize.com/",
+				remoteFiles: ["html/moving-from-wordpress-to-octopress/",
+											"css/site-preloading-methods/"], //or
+				remoteFiles: "validation-files.json", // JSON file contains array of page paths. 
+				relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
+		},
+		files: {
+				src: ['<%= yeoman.app %>/*.html', 
+						'!<%= yeoman.app %>/index.html', 
+						'!<%= yeoman.app %>/modules.html',
+						'!<%= yeoman.app %>/404.html']
+		}
 }
 ```
 
@@ -135,7 +135,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
- * 2013-10-15   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.
+ * 2013-08-31   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.  
  * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.  
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
  * 2013-08-05   v0.1.2   Fixed issues.
