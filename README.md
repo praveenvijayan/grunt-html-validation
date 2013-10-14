@@ -96,6 +96,17 @@ remoteFiles: "validation-files.json"
 "html/simple-responsive-image-technique/"]
 ```
 
+#### options.relaxerror
+Type: `Array` <br/>
+Default value: ``
+
+Helps to skip certain w3c errors messages from validation. Give exact error message in an array & validator will ignore those relaxed errors from validation. 
+
+```js
+relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","Element title must not be empty."]
+```
+
+
 ### Usage Examples
 
 ```js
@@ -106,7 +117,8 @@ validation: {
         remotePath: "http://decodize.com/",
         remoteFiles: ["html/moving-from-wordpress-to-octopress/",
                       "css/site-preloading-methods/"], //or
-        remoteFiles: "validation-files.json" // JSON file contains array of page paths.  
+        remoteFiles: "validation-files.json", // JSON file contains array of page paths. 
+        relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
     },
     files: {
         src: ['<%= yeoman.app %>/*.html', 
@@ -123,6 +135,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
+ * 2013-10-15   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.
  * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.  
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
  * 2013-08-05   v0.1.2   Fixed issues.

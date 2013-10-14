@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<!--
+  ___  ___ ___ ___  ___ ___ _______ 
+ |   \| __/ __/ _ \|   \_ _|_  / __|
+ | |) | _| (_| (_) | |) | | / /| _| 
+ |___/|___\___\___/|___/___/___|___|
+-->
+  <meta charset="utf-8">
+  <title>Getting started with Yeoman 1.0 Beta on Windows - Decodize</title>
+  <meta name="author" content="Praveen Vijayan">
+
+  
+  <meta name="description" content="App to control html5 presentations.">
+  <meta name="keywords" content="html5, presentations, slides, remote-contol, keynote, nodejs, socketio, web-app, jitsu, websocket">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="author" href="https://plus.google.com/111067440252423767432/posts">
+  <script>
+    var cwResImg = function () {
+    var cwBpArry = [1382, 992, 768, 480], //Image breakpoint arrays
+      currIndex,
+      cwResImgVal = Math.max(screen.width,screen.height),
+      hdpi = window.devicePixelRatio > 1 ? window.devicePixelRatio : 1,
+      rwdImgId = "rwdimg-"+Math.floor(Math.random()*1000),
+      tpl='<img src="{src}" alt="{alt}" title="{title}" id="{rwdImgId}">';
+
+    cwBpArry.push(cwResImgVal);
+    cwBpArry.sort(function(a,b){return a-b});
+
+    if(Array.prototype.indexOf){
+      currIndex = cwBpArry.indexOf(cwResImgVal) + 1;
+    }else{
+      for(var i in cwBpArry){
+        if(cwBpArry[i] === cwResImgVal){
+          currIndex = parseInt(i)+1;
+        }
+      }   
+    }
+
+    cwBpArry[currIndex] = cwBpArry[currIndex] || cwBpArry[currIndex-1];
+
+    var imgWid = Math.max.apply(Math, cwBpArry) <= cwBpArry[currIndex] ? cwBpArry[currIndex-2] : cwBpArry[currIndex];
+
+    return { 
+      imgWid : imgWid,
+      hdpi: hdpi,
+      rwdImg:function(arg){
+        
+        var src = arg.src || arguments[0] || '',
+          src = src.replace(/\/s\d*\//, '/s'+imgWid * hdpi+'/'),
+          title = arg.title || arg.alt || arguments[1] || '',
+          alt = arg.alt || arg.title || arguments[2] || arguments[1] || '',
+          img = tpl.replace('{src}',src).replace('{title}',title).replace('{alt}',alt).replace('{rwdImgId}',rwdImgId);
+
+        document.write(img)
+      }
+    };
+  }()
+
+  //Iframe communication
+  document.domain = "decodize.com";
+  </script>
+  
+  <link rel="canonical" href="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="//disqus.com" rel="dns-prefetch" />
+  <link href="//googleusercontent.com" rel="dns-prefetch" />
+  <link href="//google.com" rel="dns-prefetch" />
+  <link href="//twitter.com" rel="dns-prefetch" />
+  <link href="//google-analytics.com" rel="dns-prefetch" />
+  <link href="//facebook.com" rel="dns-prefetch" />
+  <link href="http://disqus.com" rel="prefetch" /> <!– IE9+ –>
+  <link href="http://googleusercontent.com/" rel="prefetch" /> <!– IE9+ –>
+  <link href="http://google.com/" rel="prefetch" /> <!– IE9+ –>
+  <link href="http://twitter.com" rel="prefetch" /> <!– IE9+ –>
+  <link href="http://google-analytics.com" rel="prefetch" /> <!– IE9+ –>
+  <link href="http://facebook.com" rel="prefetch" /> <!– IE9+ –>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/Decodize" rel="alternate" title="Decodize" type="application/atom+xml">
+</head>
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Decodize</a></h1>
+  
+    <h2>console.log</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/Decodize" rel="rss" title="subscribe via RSS">RSS</a></li>
+  <li><a href="http://twitter.com/praveen_vijaya" rel="twitter" title="Twitter @praveen_vijaya">Twitter</a></li>
+  <li><a href="https://github.com/praveenvijayan" rel="github" title="Github">Github</a></li>
+  <li><a href="https://delicious.com/praveenvijayan" rel="delicious" title="Delicious">Delicious</a></li>
+  <li><a href="https://facebook.com/praveen.vijayan0" rel="facebook" title="Facebook">Facebook</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:decodize.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Started With Yeoman 1.0 Beta on Windows</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-03T01:23:00+05:30" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Update</h3>
+
+<p><strong><em>April 8th 2013</em></strong></p>
+
+<p><strong><em>Yomen normal installation (npm install) works fine now. No need to do extra steps for windows.</em></strong></p>
+
+<ol>
+<li><code>install -g yo grunt-cli bower</code></li>
+<li><code>yo webapp</code></li>
+<li><code>npm install &amp;&amp; bower install</code></li>
+<li><code>grunt</code></li>
+</ol>
+
+
+<h2>Introduction.</h2>
+
+<p>Yeoman 1.0 Beta out a few days ago. Its not officially supported on Windows, as of now we have to do some extra work to make it work on windows. Installing this version is simpler than previous <a href="http://decodize.com/css/installing-yeoman-front-end-development-stack-windows/">Yeoman 0.9 on windows</a>.</p>
+
+<p><img src="//lh6.googleusercontent.com/-ABbM-YmiiwQ/UTJtmXMqdXI/AAAAAAAAFOo/aCThSsOZ8h0/s912/init.jpg" alt="Yeoman 1.0 Beta" /></p>
+
+<p>Don&#8217;t use Yeoman 1.0 Beta in production, it may have bugs.</p>
+
+<p>In new version tools are divided into 3 category.</p>
+
+<p><img src="//raw.github.com/yeoman/yeoman.io/gh-pages/media/workflow.jpg" alt="Yeoman yo, bower and grunt" /></p>
+
+<!-- more -->
+
+
+<p><strong><em><a href="http://yeoman.io">yo</a></em></strong> for scaffolding tools. <br>
+<strong><em><a href="http://gruntjs.com">grunt 0.4.0</a></em></strong> as build tool. <br>
+<strong><em><a href="http://twitter.github.com/bower/">bower</a></em></strong> as package management tool.</p>
+
+<p>Bower and Grunt 0.4.0 will work on windows. I faced problem when installing Mocha and Imagemin.</p>
+
+<h2>Installation</h2>
+
+<ol>
+<li>Install <a href="http://nodejs.org">nodejs</a> if its not installed.</li>
+<li>Uninstall previously installed gruntjs.</li>
+<li>Install yo, grunt-cli and bower using:- <code>install -g yo grunt-cli bower</code></li>
+</ol>
+
+
+<p>Note: You must install Compass if planned to use SASS/SCSS.</p>
+
+<p>Create a project folder and open it in cmd.</p>
+
+<p>type: <code>yo webapp</code></p>
+
+<p><img src="//lh5.googleusercontent.com/-CUD_PZfAZ0E/UTJtgqnQclI/AAAAAAAAFNs/AG_hbjFzMWg/s720/files.jpg" alt="Yeoman webapp" /></p>
+
+<p>It will ask you some questions about the type of the project. Once project created, open package.json and delete</p>
+
+<pre><code>"grunt-contrib-imagemin":"0.1.2"
+"grunt-mocha":"~0.2.2"
+</code></pre>
+
+<p><img src="//lh4.googleusercontent.com/-gE15X7PGCyg/UTJtlJutHfI/AAAAAAAAFOU/dnYptoDRM-U/s512/package-json.jpg" alt="Grunt package.json" /></p>
+
+<p>Save it and run</p>
+
+<p><code>npm install &amp;&amp; bower install</code></p>
+
+<p><img src="//lh6.googleusercontent.com/-Ms1FbZpVr3I/UTJtj2-wK9I/AAAAAAAAFOM/mBN-XHQIy_8/s720/npm-install-and-bower.jpg" alt="npm install &amp;&amp; bower install" /></p>
+
+<p>Sit and relax, it will install all project dependencies. Run following command once installation completes.</p>
+
+<pre><code>npm install grunt-contrib-imagemin
+</code></pre>
+
+<p><img src="//lh5.googleusercontent.com/-bTw6y61G08Y/UTJthdzVB2I/AAAAAAAAFN8/i-VL1BWdNUk/s720/imagemin.jpg" alt="imagemin" /></p>
+
+<p>It installs optipng and jpegtran. After installation open package.json and add <code>"grunt-contrib-imagemin":"0.1.2"</code> in the list.</p>
+
+<p>Now comes the hardest part : Mocha test suite installation.</p>
+
+<p>Go to <a href="http://phantomjs.org/">phantomjs.org </a> and <a href="http://phantomjs.org/download.html">download phantomjs for windows</a> and extract it in a folder named &#8216;phantom&#8217;. Its important to name it as phantom.</p>
+
+<p>Run <code>npm install grunt-mocha</code></p>
+
+<p>Count on the messages and stop execution by pressing ctrl+c when you saw &#8220;Requesting&#8230;&#8221; (Terminate the batch job).</p>
+
+<p><img src="//lh3.googleusercontent.com/-8IY6Yw_6SxI/UTJtnIDs88I/AAAAAAAAFOk/_eS8LsePVrY/s720/phantom.jpg" alt="Phantomjs" /></p>
+
+<p>Open the following location,
+<code>node_modules/grunt-mocha/node-modules/grunt-lib-phantomjs/node_modules/phantomjs/lib/</code>
+copy and paste phantom folder (extracted files from phantomjs.org) here.</p>
+
+<p><img src="//lh6.googleusercontent.com/-kMjUR0MXWhk/UTJti3I4kJI/AAAAAAAAFOE/CQDn9akBaPo/s655/lib.jpg" alt="phantom location" /></p>
+
+<p>Open  package.json from project root folder and add <code>"grunt-mocha":"~0.2.2"</code> back to the list. Close cmd and reopen it. Now everything in place and we can play with yeoman commands.</p>
+
+<p>run <code>grunt</code></p>
+
+<p>This will generate production quality version of your app in dist folder.</p>
+
+<p><img src="//lh3.googleusercontent.com/-UcV7VaD3fYo/UTJtgzrVrMI/AAAAAAAAFN0/nWk_TDQpJVw/s576/build.jpg" alt="Yeoman build version" /></p>
+
+<h2>Yo commands</h2>
+
+<pre><code>yo webapp - creates project structure
+grunt test - test against Mocha test suite
+grunt server - runs your app in local server
+grunt watch - watch modified fles and recompile it. 
+</code></pre>
+
+<p>More on <a href="//yeoman.io/gettingstarted_1.0.html">Yeoman 1.0 beta</a></p>
+
+<pre><code>    [Yeoman github documentation](//github.com/yeoman/yeoman/wiki)
+</code></pre>
+
+<h2>Errors may encounter during installation</h2>
+
+<p>Some of the following issues may encounter during the installation.</p>
+
+<h4>Bower error status code of git :127</h4>
+
+<p>I got error 128 when I tried powershell.</p>
+
+<p><img src="//lh6.googleusercontent.com/-da-gBAq5pMU/UTNPTVyFnBI/AAAAAAAAFO4/UhNm4e4qcH0/s640/yo-bower.jpg" alt="Git environment variable" /></p>
+
+<p>Solution: add Git path in windows environment variables.</p>
+
+<p><a href="//lh5.googleusercontent.com/-cpgqYXV60Hc/UTNPYeH0w1I/AAAAAAAAFPA/R1cTl9pkoUg/s2000/setEnvironment-variable.jpg"><img src="//lh5.googleusercontent.com/-cpgqYXV60Hc/UTNPYeH0w1I/AAAAAAAAFPA/R1cTl9pkoUg/s576/setEnvironment-variable.jpg" alt="Git environment variable solution" /></a></p>
+
+<h4>Error listen EADDRINUSE &#8230;.</h4>
+
+<p>Sometimes when you use <code>grunt server</code>, may encounter this error. This is because of the port is being used by another program. Find the program which uses the port.</p>
+
+<p><code>netstat -aon | grep 35729</code> to filter the port and PID. Open task manager and kill the process. Run grunt server again.</p>
+
+<p><a href="//lh6.googleusercontent.com/-skPfc85wpMI/UTNUZrwsLEI/AAAAAAAAFPY/DakhPLwG-EU/s2000/pid-taskmanager.jpg"><img src="//lh6.googleusercontent.com/-skPfc85wpMI/UTNUZrwsLEI/AAAAAAAAFPY/DakhPLwG-EU/s1024/pid-taskmanager.jpg" alt="EADDRINUSE" /></a></p>
+
+<h2>Summary</h2>
+
+<p>Yeoman 1.0 Beta is simpler than previous version. There are differences in the way command supplies, previously to boot up local server we used &#8216;yeoman server&#8217;, but now it is &#8216;grunt server&#8217;. Yeoman, grunt and bower are separated in this version and it is more flexible than previous Yeoman 0.9.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Praveen Vijayan</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-03T01:23:00+05:30" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/html/'>html</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/" data-via="praveen_vijaya" data-counturl="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/html/slidemote-universal-remote-control-for-html5-presentations/" title="Previous Post: Slidemote - Universal remote control for html5 presentations">&laquo; Slidemote - Universal remote control for html5 presentations</a>
+      
+      
+        <a class="basic-alignment right" href="/GAE/linktomob-share-your-links-quickly-and-easily-on-mobile-devices/" title="Next Post: Linktomob - Share your links quickly and easily on mobile devices.">Linktomob - Share your links quickly and easily on mobile devices. &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/html,css,javascript,/gruntjs,/yo,/bower/front-end-viewpoints-architecture-building-large-websites/">Tooling for modern web app development</a>
+      </li>
+    
+      <li class="post">
+        <a href="/GAE/linktomob-share-your-links-quickly-and-easily-on-mobile-devices/">Linktomob - Share your links quickly and easily on mobile devices.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/">Getting started with Yeoman 1.0 Beta on Windows</a>
+      </li>
+    
+      <li class="post">
+        <a href="/html/slidemote-universal-remote-control-for-html5-presentations/">Slidemote - Universal remote control for html5 presentations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/html/simple-responsive-image-technique/">Simple Responsive image technique</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <script>
+    (function(w, d, s) {
+      function go(){
+        var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.src = url; js.id = id; js.async = true;
+        $(js).load(function(){
+            getTwitterFeed("praveen_vijaya", 4, false);
+        });
+        fjs.parentNode.insertBefore(js, fjs);
+      };
+        load('/javascripts/twitter.js', 'recentTweets');
+      }
+      if (w.addEventListener) { w.addEventListener("load", go, false); }
+      else if (w.attachEvent) { w.attachEvent("onload",go); }
+    }(window, document, 'script'));
+  </script>
+
+  
+    <a href="http://twitter.com/praveen_vijaya" class="twitter-follow-button" data-show-count="false">Follow @praveen_vijaya</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/111067440252423767432?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+
+  Copyright &copy; 2013 - Praveen Vijayan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a><a href="https://plus.google.com/112271602152550681222" rel="publisher" style="visibility: hidden">Google+</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'decodize';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/';
+        var disqus_url = 'http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/';
+        var disqus_script = 'embed.js';
+      
+    
+    (function(w, d, s) {
+      function go(){
+        var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.src = url; js.id = id; js.async = true;
+        fjs.parentNode.insertBefore(js, fjs);
+      };
+        load('http://' + disqus_shortname + '.disqus.com/' + disqus_script, 'discuss');
+      }
+      if (w.addEventListener) { w.addEventListener("load", go, false); }
+      else if (w.attachEvent) { w.attachEvent("onload",go); }
+    }(window, document, 'script'));
+
+</script>
+
+
+
+
+<div id="fb-root"></div>
+<script>
+		(function(w, d, s) {
+		  function go(){
+		    var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+			  if (d.getElementById(id)) {return;}
+			  js = d.createElement(s); js.src = url; js.id = id; js.async = true;
+			  fjs.parentNode.insertBefore(js, fjs);
+			};
+		    load('//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1', 'facebook-jssdk');
+		  }
+		  if (w.addEventListener) { w.addEventListener("load", go, false); }
+		  else if (w.attachEvent) { w.attachEvent("onload",go); }
+		}(window, document, 'script'));
+	</script>
+
+
+
+<script>
+(function(w, d, s) {
+  function go(){
+    var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+	  if (d.getElementById(id)) {return;}
+	  js = d.createElement(s); js.src = url; js.id = id; js.async = true;
+	  fjs.parentNode.insertBefore(js, fjs);
+	};
+    load('https://apis.google.com/js/plusone.js', 'gplus1js');
+  }
+  if (w.addEventListener) { w.addEventListener("load", go, false); }
+  else if (w.attachEvent) { w.attachEvent("onload",go); }
+}(window, document, 'script'));
+</script>
+
+
+
+
+	<script>
+		(function(w, d, s) {
+		  function go(){
+		    var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+			  if (d.getElementById(id)) {return;}
+			  js = d.createElement(s); js.src = url; js.id = id; js.async = true;
+			  fjs.parentNode.insertBefore(js, fjs);
+			};
+		    load('http://platform.twitter.com/widgets.js', 'twitterwid');
+		  }
+		  if (w.addEventListener) { w.addEventListener("load", go, false); }
+		  else if (w.attachEvent) { w.attachEvent("onload",go); }
+		}(window, document, 'script'));
+	</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12969780-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+  var GoSquared = {};
+  GoSquared.acct = "GSN-491671-U";
+  (function(w){
+    function gs(){
+      w._gstc_lt = +new Date;
+      var d = document, g = d.createElement("script");
+      g.type = "text/javascript";
+      g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
+      var s = d.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(g, s);
+    }
+    w.addEventListener ?
+      w.addEventListener("load", gs, false) :
+      w.attachEvent("onload", gs);
+  })(window);
+</script>
+
+
+<script type="text/javascript">
+  var analytics=analytics||[];analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);var r=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}},i=["identify","track","trackLink","trackForm","trackClick","trackSubmit","pageview","ab","alias","ready"];for(var s=0;s<i.length;s++)analytics[i[s]]=r(i[s])};
+  analytics.load("4rv3y0wzxl");
+</script>
+
+</body>
+</html>

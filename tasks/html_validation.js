@@ -63,14 +63,18 @@ module.exports = function(grunt) {
 			reset: false,
 			stoponerror: false,
 			remotePath: false,
-			maxTry: 3
+			maxTry: 3,
+			relaxerror:[]
 		});
 
 		var done = this.async(),
 			files = grunt.file.expand(this.filesSrc),
 			flen = files.length,
 			readSettings = {},
-			remoteArry = [];
+			remoteArry = [],
+			isRelaxError = false;
+
+		isRelaxError = options.relaxerror.length && options.relaxerror.length !== '';
 
 		
 		var makeFileList  = function (files) {
@@ -90,9 +94,17 @@ module.exports = function(grunt) {
 		}
 
 		var addToReport = function(fname, status) {
+			var relaxedReport = [];
+
+			for (var i = 0; i < status.length; i++) {
+				if(!checkRelaxError(status[i].message)){
+					relaxedReport.push(status[i])
+				};
+			};
+
 			var report = {};
 			report.filename = fname;
-			report.error = status;
+			report.error = relaxedReport;
 			reportArry.push(report);
 		};
 
@@ -127,6 +139,8 @@ module.exports = function(grunt) {
 					output: 'json', // Defaults to 'json', other option includes html
 					callback: function(res) {
 
+						// console.log(res)
+
 						flen = files.length;
 
 						if (!res.messages) {
@@ -150,16 +164,29 @@ module.exports = function(grunt) {
 						len = res.messages.length;
 
 						if (len) {
+							var errorCount = 0;
 
 							for (var prop in res.messages) {
-								console.log(prop + "=> ".warn + JSON.stringify(res.messages[prop].message).help +
+								if(isRelaxError){
+									var chkRelaxError = checkRelaxError(res.messages[prop].message);
+								}
+
+								if(!chkRelaxError){
+									errorCount = errorCount+1;
+									console.log(errorCount + "=> ".warn + JSON.stringify(res.messages[prop].message).help +
 									" Line no: " + JSON.stringify(res.messages[prop].lastLine).prompt
-								);
+									);
+								}
+								
 							}
 
-							readSettings[files[counter]] = false;
-							console.log("No of errors: ".error + res.messages.length);
 
+
+							if(errorCount !== 0){
+								console.log("No of errors: ".error + errorCount);
+							}
+							
+							readSettings[files[counter]] = false;
 							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
 							addToReport(reportFilename, res.messages);
 
@@ -168,14 +195,23 @@ module.exports = function(grunt) {
 								return;
 							}
 
+							if(isRelaxError && errorCount === 0){
+								setGreen();
+							}
+
+
 						} else {
 
+							setGreen();
+
+						}
+
+						function setGreen (argument) {
 							readSettings[files[counter]] = true;
 							grunt.log.ok(msg.ok.green);
 
 							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
 							addToReport(reportFilename, false);
-
 						}
 
 						grunt.file.write(options.path, JSON.stringify(readSettings));
@@ -202,6 +238,12 @@ module.exports = function(grunt) {
 				});
 			}
 		};
+
+		function checkRelaxError (error) {
+			if(options.relaxerror.indexOf(error) >= 0){
+				return true;
+			}
+		}
 
 		/*Remote validation 
 		*Note on Remote validation.
