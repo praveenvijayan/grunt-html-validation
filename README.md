@@ -56,7 +56,7 @@ Default file for storing validation information.
 Type: `String` <br/>
 Default value: `validation-report.json`
 
-Consolidated report in JSON format. 
+Consolidated report in JSON format, if reportpath is ``false`` it will not generated.
 
 #### options.stoponerror
 Type: `Boolean` <br/>
