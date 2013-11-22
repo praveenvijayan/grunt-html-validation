@@ -138,16 +138,16 @@ Example template:
 Wrapped template:
 ```html
 <!DOCTYPE HTML>
-	<html>
-		<head>
-			<title>-</title>
-		</head>
-		<body>
-			<div>
-				<span>Some content</span>
-				...
-			</div>
-		</body>
+<html>
+	<head>
+		<title>-</title>
+	</head>
+	<body>
+		<div>
+			<span>Some content</span>
+			...
+		</div>
+	</body>
 </html>
 ```
 
