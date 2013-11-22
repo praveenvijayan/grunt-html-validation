@@ -100,10 +100,10 @@ remoteFiles: "validation-files.json"
 Type: `Array` <br/>
 Default value: ``
 
-Helps to skip certain w3c errors messages from validation. Give exact error message in an array & validator will ignore those relaxed errors from validation. 
+Helps to skip certain w3c errors messages from validation. Give exact error message or a regular expression in an array & validator will ignore those relaxed errors from validation. 
 
 ```js
-relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","Element title must not be empty."]
+relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","document type does not allow element \"[A-Z]+\" here"]
 ```
 
 
