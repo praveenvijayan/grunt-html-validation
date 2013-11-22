@@ -240,8 +240,9 @@ module.exports = function(grunt) {
 		};
 
 		function checkRelaxError (error) {
-			if(options.relaxerror.indexOf(error) >= 0){
-				return true;
+			for(var i = 0, l = options.relaxerror.length; i < l; i++) {
+				var re = new RegExp(options.relaxerror[i], 'g');
+				if(re.test(error)) return true;
 			}
 		}
 
