@@ -124,7 +124,7 @@ Type: `Boolean` <br/>
 Default value: `false`
 
 Enables template processing. Templates are assumed to be fragments of potentially valid HTML without
-<head> and <body> tags, in .html files. The validation process therefore wraps the template contents in the minimal boilerplate
+&lt;head&gt; and &lt;body&gt; tags, in .html files. The validation process therefore wraps the template contents in the minimal boilerplate
 header and footer code required to validate, writes the result to a temporary file and passes the file to the validator.
 
 Example template:
