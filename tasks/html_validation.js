@@ -12,9 +12,7 @@ module.exports = function(grunt) {
 
 	var w3cjs = require('w3cjs');
 	var colors = require('colors');
-	var fs = require('fs');
 	var path = require('path');
-	var request = require('request');
 	var rval = require('../lib/remoteval');
 
 	colors.setTheme({
@@ -31,9 +29,7 @@ module.exports = function(grunt) {
 		blue: 'blue'
 	});
 
-	var htmlContent = "",
-		arryFile = [],
-		counter = 0,
+	var counter = 0,
 		msg = {
 			error: "Something went wrong",
 			ok: "Validation successful..",
@@ -41,16 +37,13 @@ module.exports = function(grunt) {
 			networkError: 'Network error re-validating..'.error,
 			validFile: "Validated skipping..",
 			nofile: ":- No file is specified in the path!",
-			nextfile: "Skipping to next file..".verbose,
+			nextfile: "Skipping to the next file..".verbose,
 			eof: "End of File..".verbose,
 			fileNotFound: "File not found..".error,
-			remotePathError: "Remote path ".error + "(options->remotePath) ".grey + "is mandatory when remote files ".error+"(options-> remoteFiles) ".grey+"are specified!".error
+			remotePathError: "Remote path ".error + "(options->remotePath) ".grey + "is mandatory when remote files ".error+"(options-> remoteFiles) ".grey+"are specified!".error,
+			temp: "Using temp file: ".info
 		},
 		len,
-		fileStat = {},
-		isModified,
-		fileCount = 0,
-		validsettings = "",
 		reportArry =[],
 		retryCount = 0,
 		reportFilename = "";
@@ -64,24 +57,28 @@ module.exports = function(grunt) {
 			stoponerror: false,
 			remotePath: false,
 			maxTry: 3,
-			relaxerror:[]
+			relaxerror:[],
+			templates: false,
+			validatorurl: null,
+			doctype: null
 		});
 
 		var done = this.async(),
 			files = grunt.file.expand(this.filesSrc),
 			flen = files.length,
 			readSettings = {},
-			remoteArry = [],
 			isRelaxError = false;
 
 		isRelaxError = options.relaxerror.length && options.relaxerror.length !== '';
 
 		
 		var makeFileList  = function (files) {
-			return files.map(function(file){
+			return files.map(function(file) {
 				return options.remotePath + file;
 			});
-		}
+		};
+
+		var filenames = [];	// Stores the original names when temp files are used for templates.
 
 		//Reset current validation status and start from scratch.
 		if (options.reset) {
@@ -97,10 +94,10 @@ module.exports = function(grunt) {
 			var relaxedReport = [];
 
 			for (var i = 0; i < status.length; i++) {
-				if(!checkRelaxError(status[i].message)){
-					relaxedReport.push(status[i])
-				};
-			};
+				if (!checkRelaxError(status[i].message)) {
+					relaxedReport.push(status[i]);
+				}
+			}
 
 			var report = {};
 			report.filename = fname;
@@ -130,10 +127,16 @@ module.exports = function(grunt) {
 
 					var filename = options.remoteFiles ? dummyFile[counter] : files[counter];
 
-					console.log(msg.start + filename);
+					if (options.templates) {
+						console.log(msg.start + filenames[counter]);
+						console.log(msg.temp + filename);
+					}
+					else {
+						console.log(msg.start + filename);
+					}
 				}
 
-				var results = w3cjs.validate({
+				w3cjs.validate({
 					file: files[counter], // file can either be a local file or a remote file
 					// file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
 					output: 'json', // Defaults to 'json', other option includes html
@@ -146,35 +149,41 @@ module.exports = function(grunt) {
 						if (!res.messages) {
 							++retryCount;
 							var netErrorMsg = msg.networkError +  " " + retryCount.toString().error +" ";
-							if(retryCount === options.maxTry){
+							if (retryCount === options.maxTry) {
+								deleteTmpFiles(counter);
 								counter++;
-								if(counter !==flen){
-									netErrorMsg += msg.nextfile
+								if (counter !==flen) {
+									netErrorMsg += msg.nextfile;
 								}else{
-									netErrorMsg += msg.eof
+									netErrorMsg += msg.eof;
 								}
 								retryCount = 0;
 							}
 						
 							console.log(netErrorMsg);
 							validate(files);
-							return;
+						return;
 						}
 
 						len = res.messages.length;
 
 						if (len) {
 							var errorCount = 0;
+							var chkRelaxError;
 
 							for (var prop in res.messages) {
-								if(isRelaxError){
-									var chkRelaxError = checkRelaxError(res.messages[prop].message);
+								if (isRelaxError) {
+									chkRelaxError = checkRelaxError(res.messages[prop].message);
 								}
 
-								if(!chkRelaxError){
+								if (!chkRelaxError) {
 									errorCount = errorCount+1;
 									console.log(errorCount + "=> ".warn + JSON.stringify(res.messages[prop].message).help +
-									" Line no: " + JSON.stringify(res.messages[prop].lastLine).prompt
+										" Line no: " + 
+										// If we're validating templates, adjust the line no. to allow for the 
+										// header boilerplate.
+										(options.templates ? JSON.stringify(res.messages[prop].lastLine - 6).prompt
+											: JSON.stringify(res.messages[prop].lastLine).prompt)
 									);
 								}
 								
@@ -182,7 +191,7 @@ module.exports = function(grunt) {
 
 
 
-							if(errorCount !== 0){
+							if (errorCount !== 0) {
 								console.log("No of errors: ".error + errorCount);
 							}
 							
@@ -191,11 +200,12 @@ module.exports = function(grunt) {
 							addToReport(reportFilename, res.messages);
 
 							if (options.stoponerror) {
+								deleteTmpFiles();
 								done();
 								return;
 							}
 
-							if(isRelaxError && errorCount === 0){
+							if (isRelaxError && errorCount === 0) {
 								setGreen();
 							}
 
@@ -206,7 +216,7 @@ module.exports = function(grunt) {
 
 						}
 
-						function setGreen (argument) {
+						function setGreen () {
 							readSettings[files[counter]] = true;
 							grunt.log.ok(msg.ok.green);
 
@@ -221,47 +231,72 @@ module.exports = function(grunt) {
 						if (counter === flen) {
 							grunt.file.write(options.reportpath, JSON.stringify(reportArry));
 							console.log("Validation report generated: ".green + options.reportpath);
+							
+							deleteTmpFiles();
 							done();
 						}
 
 						if (options.remoteFiles) {
-							if(counter === flen) return;
+							if (counter === flen) return;
 
-							rval(dummyFile[counter], function(){
+							rval (dummyFile[counter], function() {
 								validate(files);
 							});
 
-						}else{
+						} else {
 							validate(files);
-						}	
+						}
 					}
 				});
 			}
 		};
 
 		function checkRelaxError (error) {
-			if(options.relaxerror.indexOf(error) >= 0){
+			if (options.relaxerror.indexOf(error) >= 0) {
 				return true;
 			}
 		}
+		
+		// TEMPORARY SOLUTION UNTIL tmp CAN DELETE FILES ON CTRL-C... OR AT ALL.
+		function deleteTmpFiles (num) {
+			// Delete the temp files after validating templates.
+			if (options.templates) {
+				if(typeof num !== 'undefined'){
+					if (grunt.file.exists(tplFiles[num])) {
+						grunt.file.delete(tplFiles[num], {force: true});
+					}
+				}
+				else {
+					for (var i = 0;i < tplFiles.length;i++) {
+						if (grunt.file.exists(tplFiles[i])) {
+							grunt.file.delete(tplFiles[i], {force: true});
+						}
+					}
+				}
+			}
+		}
 
+		if (options.validatorurl) {
+			w3cjs.setW3cCheckUrl(options.validatorurl);
+		}
+		
 		/*Remote validation 
 		*Note on Remote validation.
 		* W3Cjs supports remote file validation but due to some reasons it is not working as expected. Local file validation is working perfectly. To overcome this remote page is fetch using 'request' npm module and write page content in '_tempvlidation.html' file and validates as local file. 
 		*/
 
-		if(!options.remotePath && options.remoteFiles){
-			console.log(msg.remotePathError)
+		if (!options.remotePath && options.remoteFiles) {
+			console.log(msg.remotePathError);
 			return;
-		};
-
-		if(options.remotePath && options.remotePath !== ""){
-			files = makeFileList(files)
 		}
 
-		if(options.remoteFiles){
+		if (options.remotePath && options.remotePath !== "") {
+			files = makeFileList(files);
+		}
 
-			if(typeof options.remoteFiles === 'object' && options.remoteFiles.length && options.remoteFiles[0] !=='' ){
+		if (options.remoteFiles) {
+
+			if (typeof options.remoteFiles === 'object' && options.remoteFiles.length && options.remoteFiles[0] !=='' ) {
 				files = options.remoteFiles;
 				
 			}else{
@@ -276,16 +311,61 @@ module.exports = function(grunt) {
 
 			for (var i = 0; i < dummyFile.length; i++) {
 				files.push('_tempvlidation.html');
-			};
+			}
 
-			rval(dummyFile[counter], function(){
+			rval (dummyFile[counter], function() {
 				validate(files);
 			});
 
 			return;
 		}
 
-		if(!options.remoteFiles){
+		if (options.templates) {
+			// Process HTML templates. Assumes that templates are fragments of potentially valid HTML without
+			// <head> and <body> tags. Therefore wraps the template contents in the minimal boilerplate
+			// header and footer required to validate.
+
+			var html5doctype = "<!DOCTYPE HTML>";
+			var header = "\n<html>\n\t<head>\n\t\t<title>-</title>\n\t</head>\n\t<body>\n";
+			var footer = "\n\t</body>\n</html>";
+			var tplFiles = [];
+			var responses = [];
+			
+			var tmp = require('tmp');
+			tmp.setGracefulCleanup();
+			
+			var doctype = options.doctype ? options.doctype : html5doctype;
+			
+			// Create a temp file for each template and valiate that. Temp files are created asynchronously
+			// so call val() to check the response state of each call and wait until all callbacks have returned.
+			for (var j = 0;j < files.length;j++) {
+				// Wrap the asynch. call in a function and pass the counter in to avoid the
+				// context changing before the call is made, causing the counter to change.
+				(function(j) {
+					tmp.tmpName({ postfix: '.html' }, function _tempNameGenerated(err, path) {
+						if (err) throw err;
+						var content = grunt.file.read(files[j]);
+						grunt.file.write(path, doctype + header + content + footer);
+						tplFiles[j] = path;
+						responses[j] = true;
+						val();
+					});
+				})(j);
+				filenames[j] = path.basename(files[j]);
+			}
+
+			// This function checks the response array and runs validation once all
+			// temp files are ready.
+			var val = function () {
+				if (tplFiles.length == files.length) {
+					validate(tplFiles);
+				}
+			};
+
+			return;
+		}
+
+		if (!options.remoteFiles) {
 			validate(files);
 		}
 
