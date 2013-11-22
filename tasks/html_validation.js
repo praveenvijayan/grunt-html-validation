@@ -58,7 +58,9 @@ module.exports = function(grunt) {
 			remotePath: false,
 			maxTry: 3,
 			relaxerror:[],
-			templates: false
+			templates: false,
+			validatorurl: null,
+			doctype: null
 		});
 
 		var done = this.async(),
@@ -129,7 +131,7 @@ module.exports = function(grunt) {
 						console.log(msg.start + filenames[counter]);
 						console.log(msg.temp + filename);
 					}
-					else{
+					else {
 						console.log(msg.start + filename);
 					}
 				}
@@ -148,6 +150,7 @@ module.exports = function(grunt) {
 							++retryCount;
 							var netErrorMsg = msg.networkError +  " " + retryCount.toString().error +" ";
 							if (retryCount === options.maxTry) {
+								deleteTmpFiles(counter);
 								counter++;
 								if (counter !==flen) {
 									netErrorMsg += msg.nextfile;
@@ -159,8 +162,7 @@ module.exports = function(grunt) {
 						
 							console.log(netErrorMsg);
 							validate(files);
-							deleteTmpFiles();
-							return;
+						return;
 						}
 
 						len = res.messages.length;
@@ -241,7 +243,7 @@ module.exports = function(grunt) {
 								validate(files);
 							});
 
-						}else{
+						} else {
 							validate(files);
 						}
 					}
@@ -256,17 +258,28 @@ module.exports = function(grunt) {
 		}
 		
 		// TEMPORARY SOLUTION UNTIL tmp CAN DELETE FILES ON CTRL-C... OR AT ALL.
-		function deleteTmpFiles () {
+		function deleteTmpFiles (num) {
 			// Delete the temp files after validating templates.
 			if (options.templates) {
-				for (var i = 0;i < tplFiles.length;i++) {
-					if (grunt.file.exists(tplFiles[i])) {
-						grunt.file.delete(tplFiles[i], {force: true});
+				if(typeof num !== 'undefined'){
+					if (grunt.file.exists(tplFiles[num])) {
+						grunt.file.delete(tplFiles[num], {force: true});
+					}
+				}
+				else {
+					for (var i = 0;i < tplFiles.length;i++) {
+						if (grunt.file.exists(tplFiles[i])) {
+							grunt.file.delete(tplFiles[i], {force: true});
+						}
 					}
 				}
 			}
 		}
 
+		if (options.validatorurl) {
+			w3cjs.setW3cCheckUrl(options.validatorurl);
+		}
+		
 		/*Remote validation 
 		*Note on Remote validation.
 		* W3Cjs supports remote file validation but due to some reasons it is not working as expected. Local file validation is working perfectly. To overcome this remote page is fetch using 'request' npm module and write page content in '_tempvlidation.html' file and validates as local file. 
@@ -312,13 +325,16 @@ module.exports = function(grunt) {
 			// <head> and <body> tags. Therefore wraps the template contents in the minimal boilerplate
 			// header and footer required to validate.
 
-			var HTML5Header = "<!DOCTYPE HTML>\n<html>\n\t<head>\n\t\t<title>-</title>\n\t</head>\n\t<body>\n";
-			var HTML5Footer = "\n\t</body>\n</html>";
+			var html5doctype = "<!DOCTYPE HTML>";
+			var header = "\n<html>\n\t<head>\n\t\t<title>-</title>\n\t</head>\n\t<body>\n";
+			var footer = "\n\t</body>\n</html>";
 			var tplFiles = [];
 			var responses = [];
 			
 			var tmp = require('tmp');
 			tmp.setGracefulCleanup();
+			
+			var doctype = options.doctype ? options.doctype : html5doctype;
 			
 			// Create a temp file for each template and valiate that. Temp files are created asynchronously
 			// so call val() to check the response state of each call and wait until all callbacks have returned.
@@ -329,7 +345,7 @@ module.exports = function(grunt) {
 					tmp.tmpName({ postfix: '.html' }, function _tempNameGenerated(err, path) {
 						if (err) throw err;
 						var content = grunt.file.read(files[j]);
-						grunt.file.write(path, HTML5Header + content + HTML5Footer);
+						grunt.file.write(path, doctype + header + content + footer);
 						tplFiles[j] = path;
 						responses[j] = true;
 						val();

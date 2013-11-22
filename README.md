@@ -106,6 +106,66 @@ Helps to skip certain w3c errors messages from validation. Give exact error mess
 relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","Element title must not be empty."]
 ```
 
+#### options.validatorurl
+Type: `String` <br/>
+Default value: `null`
+
+Allows you to set a different validator URL so that you can use a public mirror or an internal instance of the validator.
+You must provide the URL for the actual validation page i.e. it needs to end in "/check".
+
+If not set, defaults to http://validator.w3.org/check.
+
+```js
+validatorurl: "http://<your.validator.url>/check",
+```
+
+#### options.templates
+Type: `Boolean` <br/>
+Default value: `false`
+
+Enables template processing. Templates are assumed to be fragments of potentially valid HTML without
+<head> and <body> tags, in .html files. The validation process therefore wraps the template contents in the minimal boilerplate
+header and footer code required to validate, writes the result to a temporary file and passes the file to the validator.
+
+Example template:
+`
+			<div>
+				<span>Some content</span>
+				...
+			</div>
+`
+
+Wrapped template:
+`
+<!DOCTYPE HTML>
+	<html>
+		<head>
+			<title>-</title>
+		</head>
+		<body>
+			<div>
+				<span>Some content</span>
+				...
+			</div>
+		</body>
+</html>
+`
+
+```js
+templates: true
+```
+
+#### options.doctype
+Type: `String` <br/>
+Default value: `null`
+
+Allows you to set the doctype to use when wrapping templates.
+
+If not set, defaults to the HTML 5 doctype.
+
+```js
+doctype: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+```
 
 ### Usage Examples
 
