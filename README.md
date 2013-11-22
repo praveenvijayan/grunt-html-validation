@@ -1,4 +1,3 @@
-
 # grunt-html-validation [![Build Status](https://travis-ci.org/praveenvijayan/grunt-html-validation.png?branch=master)](https://travis-ci.org/praveenvijayan/grunt-html-validation)
 
 [![NPM](https://nodei.co/npm/grunt-html-validation.png?downloads=true)](https://nodei.co/npm/grunt-html-validation/)
@@ -129,15 +128,15 @@ Enables template processing. Templates are assumed to be fragments of potentiall
 header and footer code required to validate, writes the result to a temporary file and passes the file to the validator.
 
 Example template:
-`
+```html
 			<div>
 				<span>Some content</span>
 				...
 			</div>
-`
+```
 
 Wrapped template:
-`
+```html
 <!DOCTYPE HTML>
 	<html>
 		<head>
@@ -150,7 +149,7 @@ Wrapped template:
 			</div>
 		</body>
 </html>
-`
+```
 
 ```js
 templates: true
