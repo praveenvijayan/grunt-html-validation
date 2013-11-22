@@ -218,7 +218,7 @@ module.exports = function(grunt) {
 						// depending on the output type, res will either be a json object or a html string
 						counter++;
 
-						if (counter === flen) {
+						if (options.reportpath && counter === flen) {
 							grunt.file.write(options.reportpath, JSON.stringify(reportArry));
 							console.log("Validation report generated: ".green + options.reportpath);
 							done();
