@@ -140,7 +140,7 @@ module.exports = function(grunt) {
 					// file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
 					output: 'json', // Defaults to 'json', other option includes html
 					doctype: options.doctype, // Defaults false for autodetect
-					charset: options.charset // Defaults false for autodetect
+					charset: options.charset, // Defaults false for autodetect
 					callback: function(res) {
 
 						// console.log(res)
