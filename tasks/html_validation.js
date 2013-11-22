@@ -64,7 +64,9 @@ module.exports = function(grunt) {
 			stoponerror: false,
 			remotePath: false,
 			maxTry: 3,
-			relaxerror:[]
+			relaxerror:[],
+			doctype: false, // Defaults false for autodetect
+			charset: false // Defaults false for autodetect
 		});
 
 		var done = this.async(),
@@ -137,6 +139,8 @@ module.exports = function(grunt) {
 					file: files[counter], // file can either be a local file or a remote file
 					// file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
 					output: 'json', // Defaults to 'json', other option includes html
+					doctype: options.doctype, // Defaults false for autodetect
+					charset: options.charset // Defaults false for autodetect
 					callback: function(res) {
 
 						// console.log(res)

@@ -106,6 +106,86 @@ Helps to skip certain w3c errors messages from validation. Give exact error mess
 relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","document type does not allow element \"[A-Z]+\" here"]
 ```
 
+#### options.doctype
+Type: `String` <br/>
+Default value: `false`
+
+Set `false` for autodetect or chose one of this options:
+
+- ``HTML5``
+- ``XHTML 1.0 Strict``
+- ``XHTML 1.0 Transitional``
+- ``XHTML 1.0 Frameset``
+- ``HTML 4.01 Strict``
+- ``HTML 4.01 Transitional``
+- ``HTML 4.01 Frameset``
+- ``HTML 4.01 + RDFa 1.1``
+- ``HTML 3.2``
+- ``HTML 2.0``
+- ``ISO/IEC 15445:2000 ("ISO HTML")``
+- ``XHTML 1.1``
+- ``XHTML + RDFa``
+- ``XHTML Basic 1.0``
+- ``XHTML Basic 1.1``
+- ``XHTML Mobile Profile 1.2``
+- ``XHTML-Print 1.0``
+- ``XHTML 1.1 plus MathML 2.0``
+- ``XHTML 1.1 plus MathML 2.0 plus SVG 1.1``
+- ``MathML 2.0``
+- ``SVG 1.0``
+- ``SVG 1.1``
+- ``SVG 1.1 Tiny``
+- ``SVG 1.1 Basic``
+- ``SMIL 1.0``
+- ``SMIL 2.0``
+
+
+#### options.charset
+Type: `String` <br/>
+Default value: `false`
+
+Set `false` for autodetect or chose one of this options:
+
+- ``utf-8``
+- ``utf-16``
+- ``iso-8859-1``
+- ``iso-8859-2``
+- ``iso-8859-3``
+- ``iso-8859-4``
+- ``iso-8859-5``
+- ``iso-8859-6-i``
+- ``iso-8859-7``
+- ``iso-8859-8``
+- ``iso-8859-8-i``
+- ``iso-8859-9``
+- ``iso-8859-10``
+- ``iso-8859-11``
+- ``iso-8859-13``
+- ``iso-8859-14``
+- ``iso-8859-15``
+- ``iso-8859-16``
+- ``us-ascii``
+- ``euc-jp``
+- ``shift_jis``
+- ``iso-2022-jp``
+- ``euc-kr``
+- ``gb2312``
+- ``gb18030``
+- ``big5``
+- ``big5-HKSCS``
+- ``tis-620``
+- ``koi8-r``
+- ``koi8-u``
+- ``iso-ir-111``
+- ``macintosh``
+- ``windows-1250``
+- ``windows-1251``
+- ``windows-1252``
+- ``windows-1253``
+- ``windows-1254``
+- ``windows-1255``
+- ``windows-1256``
+- ``windows-1257``
 
 ### Usage Examples
 
@@ -135,6 +215,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
+ * 2013-11-22   v0.1.8   Added options for specify doctype and charset
+ * 2013-11-22   v0.1.7   Added support for RegExp in relaxed validation
  * 2013-08-31   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.  
  * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.  
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
