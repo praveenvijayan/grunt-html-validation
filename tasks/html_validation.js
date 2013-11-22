@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 			return files.map(function(file){
 				return options.remotePath + file;
 			});
-		}
+		};
 
 		//Reset current validation status and start from scratch.
 		if (options.reset) {
@@ -100,9 +100,9 @@ module.exports = function(grunt) {
 
 			for (var i = 0; i < status.length; i++) {
 				if(!checkRelaxError(status[i].message)){
-					relaxedReport.push(status[i])
-				};
-			};
+					relaxedReport.push(status[i]);
+				}
+			}
 
 			var report = {};
 			report.filename = fname;
@@ -153,9 +153,9 @@ module.exports = function(grunt) {
 							if(retryCount === options.maxTry){
 								counter++;
 								if(counter !==flen){
-									netErrorMsg += msg.nextfile
+									netErrorMsg += msg.nextfile;
 								}else{
-									netErrorMsg += msg.eof
+									netErrorMsg += msg.eof;
 								}
 								retryCount = 0;
 							}
@@ -167,12 +167,21 @@ module.exports = function(grunt) {
 
 						len = res.messages.length;
 
+						function setGreen (argument) {
+							readSettings[files[counter]] = true;
+							grunt.log.ok(msg.ok.green);
+
+							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
+							addToReport(reportFilename, false);
+						}
+
 						if (len) {
 							var errorCount = 0;
 
 							for (var prop in res.messages) {
+								var chkRelaxError;
 								if(isRelaxError){
-									var chkRelaxError = checkRelaxError(res.messages[prop].message);
+									chkRelaxError = checkRelaxError(res.messages[prop].message);
 								}
 
 								if(!chkRelaxError){
@@ -210,14 +219,6 @@ module.exports = function(grunt) {
 
 						}
 
-						function setGreen (argument) {
-							readSettings[files[counter]] = true;
-							grunt.log.ok(msg.ok.green);
-
-							reportFilename = options.remoteFiles ? dummyFile[counter] : files[counter];
-							addToReport(reportFilename, false);
-						}
-
 						grunt.file.write(options.path, JSON.stringify(readSettings));
 						// depending on the output type, res will either be a json object or a html string
 						counter++;
@@ -229,7 +230,7 @@ module.exports = function(grunt) {
 						}
 
 						if (options.remoteFiles) {
-							if(counter === flen) return;
+							if(counter === flen) { return; }
 
 							rval(dummyFile[counter], function(){
 								validate(files);
@@ -246,7 +247,7 @@ module.exports = function(grunt) {
 		function checkRelaxError (error) {
 			for(var i = 0, l = options.relaxerror.length; i < l; i++) {
 				var re = new RegExp(options.relaxerror[i], 'g');
-				if(re.test(error)) return true;
+				if(re.test(error)) { return true; }
 			}
 		}
 
@@ -256,12 +257,12 @@ module.exports = function(grunt) {
 		*/
 
 		if(!options.remotePath && options.remoteFiles){
-			console.log(msg.remotePathError)
+			console.log(msg.remotePathError);
 			return;
-		};
+		}
 
 		if(options.remotePath && options.remotePath !== ""){
-			files = makeFileList(files)
+			files = makeFileList(files);
 		}
 
 		if(options.remoteFiles){
@@ -281,7 +282,7 @@ module.exports = function(grunt) {
 
 			for (var i = 0; i < dummyFile.length; i++) {
 				files.push('_tempvlidation.html');
-			};
+			}
 
 			rval(dummyFile[counter], function(){
 				validate(files);
