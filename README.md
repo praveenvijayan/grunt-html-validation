@@ -215,6 +215,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
+ * 2013-11-22   v0.1.9   Fix some bugs
  * 2013-11-22   v0.1.8   Added options for specify doctype and charset
  * 2013-11-22   v0.1.7   Added support for RegExp in relaxed validation
  * 2013-08-31   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.  
