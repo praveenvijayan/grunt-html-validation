@@ -35,7 +35,7 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
-    "w3cjs": "~0.1.21",
+    "w3cjs": "~0.1.22",
     "colors": "~0.6.0",
     "request": "~2.27.0"
   },

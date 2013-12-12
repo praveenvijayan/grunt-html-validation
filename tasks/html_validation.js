@@ -61,6 +61,7 @@ module.exports = function(grunt) {
 			path: "validation-status.json",
 			reportpath: "validation-report.json",
 			reset: false,
+         proxy: null,
 			stoponerror: false,
 			remotePath: false,
 			maxTry: 3,
@@ -141,6 +142,7 @@ module.exports = function(grunt) {
 					output: 'json', // Defaults to 'json', other option includes html
 					doctype: options.doctype, // Defaults false for autodetect
 					charset: options.charset, // Defaults false for autodetect
+               proxy: options.proxy, // Proxy to pass to the w3c library
 					callback: function(res) {
 
 						// console.log(res)
