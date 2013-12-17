@@ -62,6 +62,7 @@ module.exports = function(grunt) {
 			reportpath: "validation-report.json",
 			reset: false,
 			stoponerror: false,
+			failHard: false,
 			remotePath: false,
 			maxTry: 3,
 			relaxerror:[],
@@ -227,6 +228,12 @@ module.exports = function(grunt) {
 							if (options.reportpath) {
 								grunt.file.write(options.reportpath, JSON.stringify(reportArry));
 								console.log("Validation report generated: ".green + options.reportpath);
+							}
+							if (options.failHard) {
+							  var validationErrCount = reportArry.reduce(function (sum, report) { return sum + report.error.length; }, 0);
+							  if (validationErrCount > 0) {
+							    grunt.fail.warn(validationErrCount + " total unignored HTML validation error" + grunt.util.pluralize(validationErrCount, "/s") + ".");
+							  }
 							}
 							done();
 						}

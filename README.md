@@ -200,6 +200,12 @@ Set `false` for autodetect or chose one of this options:
 - ``windows-1256``
 - ``windows-1257``
 
+#### options.failHard
+Type: `boolean` <br/>
+Default value: `false`
+
+If true, the task will fail at the end of its run if there were any validation errors that were not ignored via `options.relaxerror`.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
