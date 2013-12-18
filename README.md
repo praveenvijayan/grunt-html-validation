@@ -222,6 +222,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
+ * 2013-12-17   v0.1.11  Option to set proxy, w3cjs updated to 0.1.22, added fail hard and some bug fixes
  * 2013-11-22   v0.1.9   Fix some bugs
  * 2013-11-22   v0.1.8   Added options for specify doctype and charset
  * 2013-11-22   v0.1.7   Added support for RegExp in relaxed validation
