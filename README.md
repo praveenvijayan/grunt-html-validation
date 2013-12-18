@@ -56,6 +56,9 @@ validation: {
 Type: `Boolean` <br/>
 Default value: `'false'`
 
+Resets all the validated  files status. When want to revalidate all the validated files -
+`eg: sudo grunt validate --reset=true`
+
 #### options.proxy
 Type: `String` <br/>
 Default value: `null`
@@ -65,9 +68,6 @@ Setup your proxy when you are behind a corporate proxy and encounters `ETIMEDOUT
 ```js
 proxy: 'http://proxy:8080'
 ```
-
-Resets all the validated  files status. When want to revalidate all the validated files - 
-`eg: sudo grunt validate --reset=true`
 
 #### options.path
 Type: `String` <br/>
