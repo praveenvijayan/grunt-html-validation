@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             //               "html/moving-from-wordpress-to-octopress/",
             //               "css/site-preloading-methods/",
             //               "html/sublime-text-2-bidirectional-language-support-plugin/"]
-            // remoteFiles: "validation-files.json"
+            // remoteFiles: "validation-files.json",
             relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","Element title must not be empty."]
         },
         files: {
@@ -69,6 +69,8 @@ module.exports = function(grunt) {
   // plugin's task(s), then test the result.
   grunt.registerTask('test', ['clean', 'nodeunit']);
 
+  grunt.registerTask('multiple', ['validation', 'clean', 'nodeunit']);
+  
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
 

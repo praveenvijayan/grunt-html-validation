@@ -11,12 +11,12 @@
  |___/|___\___\___/|___/___/___|___|
 -->
   <meta charset="utf-8">
-  <title>Getting started with Yeoman 1.0 Beta on Windows - Decodize</title>
+  <title>Simple Responsive image technique - Decodize</title>
   <meta name="author" content="Praveen Vijayan">
 
   
-  <meta name="description" content="App to control html5 presentations.">
-  <meta name="keywords" content="html5, presentations, slides, remote-contol, keynote, nodejs, socketio, web-app, jitsu, websocket">
+  <meta name="description" content="Serving resized images in Responsive Web Design.">
+  <meta name="keywords" content="images, Responsive Web Design (RWD), adaptive images, CDN, Image resize, mobile">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -69,7 +69,7 @@
   document.domain = "decodize.com";
   </script>
   
-  <link rel="canonical" href="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/">
+  <link rel="canonical" href="http://decodize.com/html/simple-responsive-image-technique/">
   <link href="/favicon.ico" rel="icon">
   <link href="//disqus.com" rel="dns-prefetch" />
   <link href="//googleusercontent.com" rel="dns-prefetch" />
@@ -133,7 +133,7 @@
   
   <header>
     
-      <h1 class="entry-title">Getting Started With Yeoman 1.0 Beta on Windows</h1>
+      <h1 class="entry-title">Simple Responsive Image Technique</h1>
     
     
       <p class="meta">
@@ -149,150 +149,221 @@
   
 
 
-<time datetime="2013-03-03T01:23:00+05:30" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+<time datetime="2013-01-04T00:19:00+05:30" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>Update</h3>
+<div class="entry-content"><p>RWD (Responsive Web Design) is increasingly popular over past few years. One important problem faced by RWD is lack of a standardised solution to deliver resized images into multiple devices. We have wide range of device categories, screen resolutions, pixel densities and lack of bandwidth/connection detection methods, all made this process difficult.  There is no simple silver bullet  to solve this issue.</p>
 
-<p><strong><em>April 8th 2013</em></strong></p>
-
-<p><strong><em>Yomen normal installation (npm install) works fine now. No need to do extra steps for windows.</em></strong></p>
-
-<ol>
-<li><code>install -g yo grunt-cli bower</code></li>
-<li><code>yo webapp</code></li>
-<li><code>npm install &amp;&amp; bower install</code></li>
-<li><code>grunt</code></li>
-</ol>
-
-
-<h2>Introduction.</h2>
-
-<p>Yeoman 1.0 Beta out a few days ago. Its not officially supported on Windows, as of now we have to do some extra work to make it work on windows. Installing this version is simpler than previous <a href="http://decodize.com/css/installing-yeoman-front-end-development-stack-windows/">Yeoman 0.9 on windows</a>.</p>
-
-<p><img src="//lh6.googleusercontent.com/-ABbM-YmiiwQ/UTJtmXMqdXI/AAAAAAAAFOo/aCThSsOZ8h0/s912/init.jpg" alt="Yeoman 1.0 Beta" /></p>
-
-<p>Don&#8217;t use Yeoman 1.0 Beta in production, it may have bugs.</p>
-
-<p>In new version tools are divided into 3 category.</p>
-
-<p><img src="//raw.github.com/yeoman/yeoman.io/gh-pages/media/workflow.jpg" alt="Yeoman yo, bower and grunt" /></p>
+<p>This is a quick post on a simple technique I used to create responsive image. This is a javascript solution, but it will work in javascript disabled environment by using a noscript fallback. This technique will start with mobile image first &amp; there is no need to parse and replace image sources.</p>
 
 <!-- more -->
 
 
-<p><strong><em><a href="http://yeoman.io">yo</a></em></strong> for scaffolding tools. <br>
-<strong><em><a href="http://gruntjs.com">grunt 0.4.0</a></em></strong> as build tool. <br>
-<strong><em><a href="http://twitter.github.com/bower/">bower</a></em></strong> as package management tool.</p>
+<p>I’m using google picasa as my image host. I can resize images dynamically by setting width/height in the url.</p>
 
-<p>Bower and Grunt 0.4.0 will work on windows. I faced problem when installing Mocha and Imagemin.</p>
+<p><a href="http://demos.decodize.com/responsive-images/demo.html" title="Responsive images&quot; target=&quot;_blank">Responsive images demo</a></p>
 
-<h2>Installation</h2>
+<p>Eg:
+//lh3.googleusercontent.com/-Rw0hpxt70co/ULeX80ncW3I/AAAAAAAAE6g/kIDj6u1zdyI/<strong>s640</strong>/query-loader1.jpg</p>
 
-<ol>
-<li>Install <a href="http://nodejs.org">nodejs</a> if its not installed.</li>
-<li>Uninstall previously installed gruntjs.</li>
-<li>Install yo, grunt-cli and bower using:- <code>install -g yo grunt-cli bower</code></li>
-</ol>
+<p>Setting <strong>s320</strong> will create image with width/Height (resize proportionally) 320px. We can also pass width or height. Setting <strong>w320</strong> will create an image with width 320px or passing <strong>h320</strong> will constrain height of dynamically created image to 320px. Now we have our server, which can provide us different images sizes upon request.</p>
+
+<p>You can use your own server methods or other resources like <a href="http://www.sencha.com/learn/how-to-use-src-sencha-io/">src.sencha.io</a> to resize images on the fly.</p>
+
+<h3>Technique</h3>
+
+<p>Using css fluid image technique scale image to viewpot. Get the device size and insert image using script.</p>
+
+<p><strong><em>CSS</em></strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">img</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">max-width</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Note: You must install Compass if planned to use SASS/SCSS.</p>
+<p><strong><em>JavaScript</em></strong> <br></p>
 
-<p>Create a project folder and open it in cmd.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">cwResImg</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">cwBpArry</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1382</span><span class="p">,</span> <span class="mi">992</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mi">480</span><span class="p">],</span> <span class="c1">//Image breakpoint arrays</span>
+</span><span class='line'>      <span class="nx">currIndex</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">cwResImgVal</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">screen</span><span class="p">.</span><span class="nx">height</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">hdpi</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">devicePixelRatio</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="nb">window</span><span class="p">.</span><span class="nx">devicePixelRatio</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">rwdImgId</span> <span class="o">=</span> <span class="s2">&quot;rwdimg-&quot;</span><span class="o">+</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">tpl</span><span class="o">=</span><span class="s1">&#39;&lt;img src=&quot;{src}&quot; alt=&quot;{alt}&quot; title=&quot;{title}&quot; id=&quot;{rwdImgId}&quot; {attributes}&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">cwBpArry</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">cwResImgVal</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">cwBpArry</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span><span class="k">return</span> <span class="nx">a</span><span class="o">-</span><span class="nx">b</span><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">currIndex</span> <span class="o">=</span> <span class="nx">cwBpArry</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">cwResImgVal</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span><span class='line'>      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">cwBpArry</span><span class="p">){</span>
+</span><span class='line'>          <span class="k">if</span><span class="p">(</span><span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">cwResImgVal</span><span class="p">){</span>
+</span><span class='line'>              <span class="nx">currIndex</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>        
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="p">]</span> <span class="o">||</span> <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">imgWid</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">,</span> <span class="nx">cwBpArry</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="p">]</span> <span class="o">?</span> <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">:</span> <span class="nx">cwBpArry</span><span class="p">[</span><span class="nx">currIndex</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">imgWid</span> <span class="o">:</span> <span class="nx">imgWid</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">hdpi</span><span class="o">:</span> <span class="nx">hdpi</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">id</span><span class="o">:</span><span class="nx">rwdImgId</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">rwdImg</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">){</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">src</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">src</span> <span class="o">||</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\/s\d*\//</span><span class="p">,</span> <span class="s1">&#39;/s&#39;</span><span class="o">+</span><span class="nx">imgWid</span> <span class="o">*</span> <span class="nx">hdpi</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="p">),</span> <span class="c1">//picasa image size replacing (s340 to device width)</span>
+</span><span class='line'>              <span class="nx">title</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">title</span> <span class="o">||</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">alt</span> <span class="o">||</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">alt</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">alt</span> <span class="o">||</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">title</span> <span class="o">||</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">||</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">attributes</span> <span class="o">=</span> <span class="nx">arg</span><span class="p">.</span><span class="nx">attr</span> <span class="o">||</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">img</span> <span class="o">=</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;{src}&#39;</span><span class="p">,</span><span class="nx">src</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;{title}&#39;</span><span class="p">,</span><span class="nx">title</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;{alt}&#39;</span><span class="p">,</span><span class="nx">alt</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;{rwdImgId}&#39;</span><span class="p">,</span><span class="nx">rwdImgId</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;{attributes}&#39;</span><span class="p">,</span><span class="nx">attributes</span><span class="p">);</span>
+</span><span class='line'>              <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">img</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">}()</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>type: <code>yo webapp</code></p>
 
-<p><img src="//lh5.googleusercontent.com/-CUD_PZfAZ0E/UTJtgqnQclI/AAAAAAAAFNs/AG_hbjFzMWg/s720/files.jpg" alt="Yeoman webapp" /></p>
+<p>
+Paste it in your page header. This will set width of the screen into ‘cwResImg’ variable. You can set image breakpoints in this variable <code>cwBpArry = [1382, 992, 768, 480];</code></p>
 
-<p>It will ask you some questions about the type of the project. Once project created, open package.json and delete</p>
+<p><strong><em>HTML</em></strong> <br>
+Replace images in HTML with.</p>
 
-<pre><code>"grunt-contrib-imagemin":"0.1.2"
-"grunt-mocha":"~0.2.2"
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;noscript&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://lh6.googleusercontent.com/-nI33VLdtmFo/UN9MmPN6bHI/AAAAAAAAFEE/1uJBJ7-plEs/s720/Webpagetest-IE8-Octopress-Default-waterfall.png&quot;</span> <span class="na">alt=</span><span class="s">&quot;Responsive images test&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/noscript&gt;</span>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'>  <span class="nx">cwResImg</span><span class="p">.</span><span class="nx">rwdImg</span><span class="p">(</span><span class="s2">&quot;http://lh6.googleusercontent.com/-nI33VLdtmFo/UN9MmPN6bHI/AAAAAAAAFEE/1uJBJ7-plEs/s450/Webpagetest-IE8-Octopress-Default-waterfall.png&quot;</span><span class="p">,</span> <span class="s1">&#39;Responsive images text script&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">---</span><span class="nx">or</span><span class="o">----</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">cwResImg</span><span class="p">.</span><span class="nx">rwdImg</span><span class="p">({</span><span class="nx">src</span><span class="o">:</span><span class="s1">&#39;http://lh6.googleusercontent.com/-nI33VLdtmFo/UN9MmPN6bHI/AAAAAAAAFEE/1uJBJ7-plEs/s450/Webpagetest-IE8-Octopress-Default-waterfall.png&#39;</span><span class="p">,</span> <span class="nx">alt</span><span class="o">:</span><span class="s1">&#39;Responsive images text script&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span><span class="s1">&#39;Responsive images text script&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="//lh4.googleusercontent.com/-gE15X7PGCyg/UTJtlJutHfI/AAAAAAAAFOU/dnYptoDRM-U/s512/package-json.jpg" alt="Grunt package.json" /></p>
 
-<p>Save it and run</p>
+<p>It has two parts <br>
+1) noscript tag contains a standard image for fallback. If js is not supported, this image will show.</p>
 
-<p><code>npm install &amp;&amp; bower install</code></p>
+<p>2) Script part <br>
+Syntax</p>
 
-<p><img src="//lh6.googleusercontent.com/-Ms1FbZpVr3I/UTJtj2-wK9I/AAAAAAAAFOM/mBN-XHQIy_8/s720/npm-install-and-bower.jpg" alt="npm install &amp;&amp; bower install" /></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">cwResImg</span><span class="p">.</span><span class="nx">rwdImg</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span><span class="s2">&quot;alt&quot;</span><span class="p">,</span><span class="s2">&quot;title&quot;</span><span class="p">,</span><span class="s2">&quot;class=&#39;myclass&#39;&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">or</span>
+</span><span class='line'><span class="nx">cwResImg</span><span class="p">.</span><span class="nx">rwdImg</span><span class="p">({</span><span class="nx">src</span><span class="o">:</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">alt</span><span class="o">:</span><span class="s2">&quot;alt&quot;</span><span class="p">,</span><span class="nx">title</span><span class="o">:</span><span class="s2">&quot;title&quot;</span><span class="p">,</span><span class="nx">attr</span><span class="o">:</span><span class="s2">&quot;class=&#39;myclass&#39;&quot;</span><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Sit and relax, it will install all project dependencies. Run following command once installation completes.</p>
 
-<pre><code>npm install grunt-contrib-imagemin
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">cwResImg</span><span class="p">.</span><span class="nx">rwdImg</span><span class="p">(</span><span class="s2">&quot;http://lh6.googleusercontent.com/-nI33VLdtmFo/UN9MmPN6bHI/AAAAAAAAFEE/1uJBJ7-plEs/s450/Webpagetest-IE8-Octopress-Default-waterfall.png&quot;</span><span class="p">,</span><span class="s2">&quot;Responsive images text script&quot;</span><span class="p">,</span><span class="s2">&quot;Responsive images text script&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="//lh5.googleusercontent.com/-bTw6y61G08Y/UTJthdzVB2I/AAAAAAAAFN8/i-VL1BWdNUk/s720/imagemin.jpg" alt="imagemin" /></p>
 
-<p>It installs optipng and jpegtran. After installation open package.json and add <code>"grunt-contrib-imagemin":"0.1.2"</code> in the list.</p>
+<p>JavaScript variable ‘cwResImg’ will replace by the max width of the device.</p>
 
-<p>Now comes the hardest part : Mocha test suite installation.</p>
+<p>When page loads url will be like the following, if its a desktop with resolution more than 1382px</p>
 
-<p>Go to <a href="http://phantomjs.org/">phantomjs.org </a> and <a href="http://phantomjs.org/download.html">download phantomjs for windows</a> and extract it in a folder named &#8216;phantom&#8217;. Its important to name it as phantom.</p>
+<p>//lh6.googleusercontent.com/-IdiwvKGQ8Lk/UN9KOZvdW7I/AAAAAAAAFDk/iSvy1_SZrrM/<strong>s1382</strong>/RTT%2520Decodize%2520github.png</p>
 
-<p>Run <code>npm install grunt-mocha</code></p>
+<h3>Demo</h3>
 
-<p>Count on the messages and stop execution by pressing ctrl+c when you saw &#8220;Requesting&#8230;&#8221; (Terminate the batch job).</p>
+<p><a href="http://demos.decodize.com/responsive-images/demo.html" title="Responsive images&quot; target=&quot;_blank">Responsive images</a></p>
 
-<p><img src="//lh3.googleusercontent.com/-8IY6Yw_6SxI/UTJtnIDs88I/AAAAAAAAFOk/_eS8LsePVrY/s720/phantom.jpg" alt="Phantomjs" /></p>
+<h3>Performance and Bandwidth</h3>
 
-<p>Open the following location,
-<code>node_modules/grunt-mocha/node-modules/grunt-lib-phantomjs/node_modules/phantomjs/lib/</code>
-copy and paste phantom folder (extracted files from phantomjs.org) here.</p>
+<p>After including this there is a noticeable performance improvement in iPhone waterfall view.</p>
 
-<p><img src="//lh6.googleusercontent.com/-kMjUR0MXWhk/UTJti3I4kJI/AAAAAAAAFOE/CQDn9akBaPo/s655/lib.jpg" alt="phantom location" /></p>
+<p>Before (11.866s) <br>
+<noscript>
+<img src="//lh6.googleusercontent.com/-VQbJXZuyy2g/UOXNzTDn7EI/AAAAAAAAFGY/4WE49NLo3Os/s800/Before%2520responsive%2520image.jpg" alt="Before responsive image" title="Before responsive image">
+</noscript><script>
+cwResImg.rwdImg("//lh6.googleusercontent.com/-VQbJXZuyy2g/UOXNzTDn7EI/AAAAAAAAFGY/4WE49NLo3Os/s800/Before%2520responsive%2520image.jpg","Before responsive image");
+</script></p>
 
-<p>Open  package.json from project root folder and add <code>"grunt-mocha":"~0.2.2"</code> back to the list. Close cmd and reopen it. Now everything in place and we can play with yeoman commands.</p>
+<p>After (8.841s) <br>
+<noscript>
+<img src="//lh5.googleusercontent.com/-M18BajmhKdE/UOXNzNWfpvI/AAAAAAAAFGU/RIjb8u81HeI/s800/After%2520responsive%2520image.jpg" alt="After responsive image" title="After responsive image">
+</noscript><script>
+cwResImg.rwdImg("//lh5.googleusercontent.com/-M18BajmhKdE/UOXNzNWfpvI/AAAAAAAAFGU/RIjb8u81HeI/s800/After%2520responsive%2520image.jpg","After responsive image");
+</script></p>
 
-<p>run <code>grunt</code></p>
-
-<p>This will generate production quality version of your app in dist folder.</p>
-
-<p><img src="//lh3.googleusercontent.com/-UcV7VaD3fYo/UTJtgzrVrMI/AAAAAAAAFN0/nWk_TDQpJVw/s576/build.jpg" alt="Yeoman build version" /></p>
-
-<h2>Yo commands</h2>
-
-<pre><code>yo webapp - creates project structure
-grunt test - test against Mocha test suite
-grunt server - runs your app in local server
-grunt watch - watch modified fles and recompile it. 
-</code></pre>
-
-<p>More on <a href="//yeoman.io/gettingstarted_1.0.html">Yeoman 1.0 beta</a></p>
-
-<pre><code>    [Yeoman github documentation](//github.com/yeoman/yeoman/wiki)
-</code></pre>
-
-<h2>Errors may encounter during installation</h2>
-
-<p>Some of the following issues may encounter during the installation.</p>
-
-<h4>Bower error status code of git :127</h4>
-
-<p>I got error 128 when I tried powershell.</p>
-
-<p><img src="//lh6.googleusercontent.com/-da-gBAq5pMU/UTNPTVyFnBI/AAAAAAAAFO4/UhNm4e4qcH0/s640/yo-bower.jpg" alt="Git environment variable" /></p>
-
-<p>Solution: add Git path in windows environment variables.</p>
-
-<p><a href="//lh5.googleusercontent.com/-cpgqYXV60Hc/UTNPYeH0w1I/AAAAAAAAFPA/R1cTl9pkoUg/s2000/setEnvironment-variable.jpg"><img src="//lh5.googleusercontent.com/-cpgqYXV60Hc/UTNPYeH0w1I/AAAAAAAAFPA/R1cTl9pkoUg/s576/setEnvironment-variable.jpg" alt="Git environment variable solution" /></a></p>
-
-<h4>Error listen EADDRINUSE &#8230;.</h4>
-
-<p>Sometimes when you use <code>grunt server</code>, may encounter this error. This is because of the port is being used by another program. Find the program which uses the port.</p>
-
-<p><code>netstat -aon | grep 35729</code> to filter the port and PID. Open task manager and kill the process. Run grunt server again.</p>
-
-<p><a href="//lh6.googleusercontent.com/-skPfc85wpMI/UTNUZrwsLEI/AAAAAAAAFPY/DakhPLwG-EU/s2000/pid-taskmanager.jpg"><img src="//lh6.googleusercontent.com/-skPfc85wpMI/UTNUZrwsLEI/AAAAAAAAFPY/DakhPLwG-EU/s1024/pid-taskmanager.jpg" alt="EADDRINUSE" /></a></p>
-
-<h2>Summary</h2>
-
-<p>Yeoman 1.0 Beta is simpler than previous version. There are differences in the way command supplies, previously to boot up local server we used &#8216;yeoman server&#8217;, but now it is &#8216;grunt server&#8217;. Yeoman, grunt and bower are separated in this version and it is more flexible than previous Yeoman 0.9.</p>
+<p><strong><em>Drawbacks</em></strong> <br>
+Messy HTML. <br>
+Accessibility</p>
 </div>
 
 
@@ -315,7 +386,7 @@ grunt watch - watch modified fles and recompile it.
   
 
 
-<time datetime="2013-03-03T01:23:00+05:30" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
+<time datetime="2013-01-04T00:19:00+05:30" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -329,7 +400,7 @@ grunt watch - watch modified fles and recompile it.
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/" data-via="praveen_vijaya" data-counturl="http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://decodize.com/html/simple-responsive-image-technique/" data-via="praveen_vijaya" data-counturl="http://decodize.com/html/simple-responsive-image-technique/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -342,10 +413,10 @@ grunt watch - watch modified fles and recompile it.
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/html/slidemote-universal-remote-control-for-html5-presentations/" title="Previous Post: Slidemote - Universal remote control for html5 presentations">&laquo; Slidemote - Universal remote control for html5 presentations</a>
+        <a class="basic-alignment left" href="/html/moving-from-wordpress-to-octopress/" title="Previous Post: Moving from Wordpress to Octopress redesign notes">&laquo; Moving from Wordpress to Octopress redesign notes</a>
       
       
-        <a class="basic-alignment right" href="/GAE/linktomob-share-your-links-quickly-and-easily-on-mobile-devices/" title="Next Post: Linktomob - Share your links quickly and easily on mobile devices.">Linktomob - Share your links quickly and easily on mobile devices. &raquo;</a>
+        <a class="basic-alignment right" href="/html/slidemote-universal-remote-control-for-html5-presentations/" title="Next Post: Slidemote - Universal remote control for html5 presentations">Slidemote - Universal remote control for html5 presentations &raquo;</a>
       
     </p>
   </footer>
@@ -451,8 +522,8 @@ grunt watch - watch modified fles and recompile it.
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/';
-        var disqus_url = 'http://decodize.com/html/getting-started-with-yeoman-1-dot-0-beta-on-windows/';
+        var disqus_identifier = 'http://decodize.com/html/simple-responsive-image-technique/';
+        var disqus_url = 'http://decodize.com/html/simple-responsive-image-technique/';
         var disqus_script = 'embed.js';
       
     
