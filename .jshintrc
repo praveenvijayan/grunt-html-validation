@@ -7,8 +7,8 @@
   "noarg": true,
   "sub": true,
   "undef": true,
+  "trailing": true,
   "boss": true,
   "eqnull": true,
-  "node": true,
-  "es5": true
+  "node": true
 }
