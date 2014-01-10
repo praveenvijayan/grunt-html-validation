@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/grunt-html-validation.png?downloads=true)](https://nodei.co/npm/grunt-html-validation/)
 
-> W3C html validaton grunt plugin. Validate all files in a directory automatically. 
+> W3C html validaton grunt plugin. Validate all files in a directory automatically.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -13,7 +13,7 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 npm install grunt-html-validation --save-dev
 ```
 
-One the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
 grunt.loadNpmTasks('grunt-html-validation');
@@ -38,12 +38,12 @@ validation: {
 				remotePath: "http://decodize.com/",
 				remoteFiles: ["html/moving-from-wordpress-to-octopress/",
 											"css/site-preloading-methods/"], //or
-				remoteFiles: "validation-files.json", // JSON file contains array of page paths. 
+				remoteFiles: "validation-files.json", // JSON file contains array of page paths.
 				relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
 		},
 		files: {
-				src: ['<%= yeoman.app %>/*.html', 
-						'!<%= yeoman.app %>/index.html', 
+				src: ['<%= yeoman.app %>/*.html',
+						'!<%= yeoman.app %>/index.html',
 						'!<%= yeoman.app %>/modules.html',
 						'!<%= yeoman.app %>/404.html']
 		}
@@ -97,14 +97,14 @@ Number of retries when network error occuers. Default case, after 3 reties valid
 Type: `String` <br/>
 Default value: ``
 
-Remote base url path. eg: "http://decodize.com/". 
+Remote base url path. eg: "http://decodize.com/".
 
 
 #### options.remoteFiles
 Type: `Array` <br/>
 Default value: ``
 
-Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified. 
+Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified.
 
 eg: remoteFiles: ["html/moving-from-wordpress-to-octopress/",
 											"css/site-preloading-methods/"]
@@ -123,7 +123,7 @@ remoteFiles: "validation-files.json"
 Type: `Array` <br/>
 Default value: ``
 
-Helps to skip certain w3c errors messages from validation. Give exact error message or a regular expression in an array & validator will ignore those relaxed errors from validation. 
+Helps to skip certain w3c errors messages from validation. Give exact error message or a regular expression in an array & validator will ignore those relaxed errors from validation.
 
 ```js
 relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","document type does not allow element \"[A-Z]+\" here"]
@@ -227,9 +227,9 @@ Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/iss
  * 2013-11-22   v0.1.9   Fix some bugs
  * 2013-11-22   v0.1.8   Added options for specify doctype and charset
  * 2013-11-22   v0.1.7   Added support for RegExp in relaxed validation
- * 2013-08-31   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.  
- * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.  
- * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added. 
+ * 2013-08-31   v0.1.6   Added relaxed validation, w3cjs updated from 0.1.9 to 0.1.10.
+ * 2013-08-31   v0.1.5   Added remote validation support. Max network error retry count.
+ * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added.
  * 2013-08-05   v0.1.2   Fixed issues.
  * 2013-04-20   v0.1.0   Initial release.
 
