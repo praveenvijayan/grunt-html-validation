@@ -2,7 +2,7 @@
  * grunt-html-validation
  * https://github.com/praveen/grunt-html-validation
  *
- * Copyright (c) 2013 praveenvijayan
+ * Copyright (c) 2013 - 2014 praveenvijayan
  * Licensed under the MIT license.
  */
 
@@ -47,8 +47,8 @@ module.exports = function(grunt) {
             relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","Element title must not be empty."]
         },
         files: {
-            src: ['test/html/*.html', 
-                '!test/html/index.html', 
+            src: ['test/html/*.html',
+                '!test/html/index.html',
                 '!test/html/404.html']
         }
     }
