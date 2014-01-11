@@ -222,7 +222,9 @@ module.exports = function (grunt) {
 
                         if (counter === flen) {
                             if (options.reportpath) {
-                                grunt.file.write(options.reportpath, JSON.stringify(reportArry));
+                                var str = JSON.stringify(reportArry, null, " ");
+                                var reportOutput = str.replace(/<\/?[^>]+>/gi, '');
+                                grunt.file.write(options.reportpath, reportOutput);
                                 console.log("Validation report generated: ".green + options.reportpath);
                             }
                             if (options.failHard) {
