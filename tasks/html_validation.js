@@ -1,8 +1,8 @@
 /*
  * grunt-html-validation
- * https://github.com/praveen/grunt-html-validation
+ * https://github.com/praveenvijayan/grunt-html-validation
  *
- * Copyright (c) 2013 - 2014 Praveen Vijayan
+ * Copyright (c) 2013 Praveen Vijayan
  * Licensed under the MIT license.
  */
 'use strict';
@@ -110,9 +110,15 @@ module.exports = function (grunt) {
             reportArry.push(report);
         };
 
+        var wrapfile,
+            wrapfile_line_start = 0;
         var validate = function (files) {
-
             if (files.length) {
+                // fix: Fatal error: Unable to read "undefined" file (Error code: ENOENT).
+                if (!files[counter]) {
+                    done();
+                }
+
 
                 if (grunt.file.exists(options.path)) {
                     readSettings = grunt.file.readJSON(options.path);
@@ -125,7 +131,7 @@ module.exports = function (grunt) {
                     addToReport(reportFilename, false);
                     counter++;
                     validate(files);
-                    done();
+                    done()
                     return;
                 }
 
@@ -136,8 +142,8 @@ module.exports = function (grunt) {
                     console.log(msg.start + filename);
                 }
 
-                var results = w3cjs.validate({
-                    file: files[counter], // file can either be a local file or a remote file
+                var w3cjs_options = {
+                    //file: files[counter], // file can either be a local file or a remote file
                     // file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
                     output: 'json', // Defaults to 'json', other option includes html
                     doctype: options.doctype, // Defaults false for autodetect
@@ -176,9 +182,14 @@ module.exports = function (grunt) {
                         }
 
                         if (len) {
-                            var errorCount = 0;
+                            var errorCount = 0,
+                                prop;
 
-                            for (var prop in res.messages) {
+                            for (prop in res.messages) {
+                                res.messages[prop].unwrapLine = res.messages[prop].lastLine - wrapfile_line_start;
+                            }
+
+                            for (prop in res.messages) {
                                 var chkRelaxError;
                                 if (isRelaxError) {
                                     chkRelaxError = checkRelaxError(res.messages[prop].message);
@@ -187,7 +198,7 @@ module.exports = function (grunt) {
                                 if (!chkRelaxError) {
                                     errorCount = errorCount + 1;
                                     console.log(errorCount + "=> ".warn + JSON.stringify(res.messages[prop].message).help +
-                                        " Line no: " + JSON.stringify(res.messages[prop].lastLine).prompt
+                                        " Line no: " + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine).prompt
                                     );
                                 }
 
@@ -222,9 +233,7 @@ module.exports = function (grunt) {
 
                         if (counter === flen) {
                             if (options.reportpath) {
-                                var str = JSON.stringify(reportArry, null, " ");
-                                var reportOutput = str.replace(/<\/?[^>]+>/gi, '');
-                                grunt.file.write(options.reportpath, reportOutput);
+                                grunt.file.write(options.reportpath, JSON.stringify(reportArry));
                                 console.log("Validation report generated: ".green + options.reportpath);
                             }
                             if (options.failHard) {
@@ -251,7 +260,20 @@ module.exports = function (grunt) {
                             validate(files);
                         }
                     }
-                });
+                };
+
+                if (options.wrapfile) {
+                    if (!wrapfile) {
+                        wrapfile = grunt.file.read(options.wrapfile);
+                        wrapfile_line_start = wrapfile.substring(0, wrapfile.indexOf("<!-- CONTENT -->")).split("\n").length - 1;
+                    }
+
+                    w3cjs_options.input = wrapfile.replace("<!-- CONTENT -->", grunt.file.read(files[counter]));
+                } else {
+                    w3cjs_options.file = files[counter];
+                }
+
+                var results = w3cjs.validate(w3cjs_options);
             }
         };
 
@@ -264,7 +286,7 @@ module.exports = function (grunt) {
             }
         }
 
-        /*Remote validation 
+        /*Remote validation
          *Note on Remote validation.
          * W3Cjs supports remote file validation but due to some reasons it is not working as expected. Local file validation is working perfectly. To overcome this remote page is fetch using 'request' npm module and write page content in '_tempvlidation.html' file and validates as local file.
          */
