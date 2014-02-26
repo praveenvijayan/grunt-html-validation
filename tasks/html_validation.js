@@ -2,7 +2,7 @@
  * grunt-html-validation
  * https://github.com/praveenvijayan/grunt-html-validation
  *
- * Copyright (c) 2013 Praveen Vijayan
+ * Copyright (c) 2013 - 2014 Praveen Vijayan
  * Licensed under the MIT license.
  */
 'use strict';

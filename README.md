@@ -102,10 +102,12 @@ Type: `String` <br/>
 Default value: ``
 
 File that will wrap your files inside.
+
 The file must contain a comment that will be replaced by each file content: **&lt;!-- CONTENT --&gt;**
+
 Useful to validate partials because w3c validator need &lt;html&gt;, &lt;head&gt;, &lt;body&gt;...
 
-note: line reported will be the partial line, if you see a negative number this means that the error is in the *wrapfile*.
+Note: line reported will be the partial line, if you see a negative number this means that the error is in the *wrapfile*.
 
 example
 
