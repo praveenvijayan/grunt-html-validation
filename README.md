@@ -97,7 +97,31 @@ Number of retries when network error occuers. Default case, after 3 reties valid
 Type: `String` <br/>
 Default value: ``
 
-Remote base url path. eg: "http://decodize.com/".
+#### options.wrapfile
+Type: `String` <br/>
+Default value: ``
+
+File that will wrap your files inside.
+
+The file must contain a comment that will be replaced by each file content: **&lt;!-- CONTENT --&gt;**
+
+Useful to validate partials because w3c validator need &lt;html&gt;, &lt;head&gt;, &lt;body&gt;...
+
+Note: line reported will be the partial line, if you see a negative number this means that the error is in the *wrapfile*.
+
+example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+  	<!-- CONTENT -->
+  </body>
+</html>
+```
+
 
 
 #### options.remoteFiles
