@@ -69,6 +69,13 @@ Setup your proxy when you are behind a corporate proxy and encounters `ETIMEDOUT
 proxy: 'http://proxy:8080'
 ```
 
+#### options.serverUrl
+Type: `String` <br/>
+Default value: `null`
+
+Supply a different validator server URL, for instance [if you run a local server](http://validator.w3.org/source/).
+Eg: `http://localhost/w3c-validator/check`
+
 #### options.path
 Type: `String` <br/>
 Default value: `'validation-status.json'`

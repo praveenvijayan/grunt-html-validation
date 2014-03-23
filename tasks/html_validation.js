@@ -273,6 +273,11 @@ module.exports = function (grunt) {
                     w3cjs_options.file = files[counter];
                 }
 
+                // override default server
+                if (options.serverUrl) {
+                    w3cjs.setW3cCheckUrl(options.serverUrl);
+                }
+
                 var results = w3cjs.validate(w3cjs_options);
             }
         };
