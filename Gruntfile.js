@@ -15,6 +15,7 @@ module.exports = function(grunt) {
         jshint: {
             all: [
                 'Gruntfile.js',
+                'lib/*.js',
                 'tasks/*.js',
                 '<%= nodeunit.tests %>'
             ],
@@ -68,11 +69,11 @@ module.exports = function(grunt) {
 
     // Whenever the 'test' task is run, first clean the 'tmp' dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'jshint', 'nodeunit']);
 
     grunt.registerTask('multiple', ['validation', 'clean', 'nodeunit']);
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['test']);
 
 };
