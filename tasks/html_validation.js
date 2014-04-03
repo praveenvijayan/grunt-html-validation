@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
     var w3cjs = require('w3cjs');
     var colors = require('colors');
-    var rval = require('../lib/remoteval');
+    var rval = require('./lib/remoteval');
 
     colors.setTheme({
         silly: 'rainbow',
