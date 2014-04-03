@@ -1,4 +1,8 @@
-node_modules
-npm-debug.log
-tmp
 .DS_Store
+/_tempvlidation.html
+/node_modules/
+/npm-debug.log
+/validation-files.json
+/validation-report.json
+/validation-status.json
+tmp
