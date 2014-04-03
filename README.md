@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/grunt-html-validation.png?downloads=true)](https://nodei.co/npm/grunt-html-validation/)
 
-> W3C html validaton grunt plugin. Validate all files in a directory automatically.
+> W3C html validation grunt plugin. Validate all files in a directory automatically.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`

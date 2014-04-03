@@ -1,6 +1,6 @@
 {
   "name": "grunt-html-validation",
-  "description": "W3C html validaton grunt plugin",
+  "description": "W3C html validation grunt plugin",
   "version": "0.1.14",
   "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
   "author": "praveenvijayan <praveenv.vijayan@gmail.com> (http://decodize.com)",
