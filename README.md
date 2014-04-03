@@ -253,6 +253,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
+ * 2014-04-03   v0.1.15  Updated dependencies (jshnt, nodeunit, request), gitignore, code cleanup etc.. 
  * 2014-03-23   v0.1.14  Updated with wrapfile & server url options.  
  * 2013-12-26   v0.1.13  Fixed running multiple tasks fail due to validation failure.
  * 2013-12-17   v0.1.11  Option to set proxy, w3cjs updated to 0.1.22, added fail hard and some bug fixes
