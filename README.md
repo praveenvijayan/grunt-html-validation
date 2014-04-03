@@ -22,7 +22,7 @@ grunt.loadNpmTasks('grunt-html-validation');
 And add to your task list using `validation`:
 
 ```js
-grunt.registerTask("default", ["validation"]);
+grunt.registerTask('default', ['validation']);
 ```
 
 ## The "validation" task
@@ -32,21 +32,21 @@ In your project's Gruntfile, add a section named `validation` to the data object
 
 ```js
 validation: {
-		options: {
-				reset: grunt.option('reset') || false,
-				stoponerror: false,
-				remotePath: "http://decodize.com/",
-				remoteFiles: ["html/moving-from-wordpress-to-octopress/",
-											"css/site-preloading-methods/"], //or
-				remoteFiles: "validation-files.json", // JSON file contains array of page paths.
-				relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
-		},
-		files: {
-				src: ['<%= yeoman.app %>/*.html',
-						'!<%= yeoman.app %>/index.html',
-						'!<%= yeoman.app %>/modules.html',
-						'!<%= yeoman.app %>/404.html']
-		}
+    options: {
+        reset: grunt.option('reset') || false,
+        stoponerror: false,
+        remotePath: 'http://decodize.com/',
+        remoteFiles: ['html/moving-from-wordpress-to-octopress/',
+                      'css/site-preloading-methods/'], //or
+        remoteFiles: 'validation-files.json', // JSON file contains array of page paths.
+        relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.'] //ignores these errors
+    },
+    files: {
+        src: ['<%= yeoman.app %>/*.html',
+              '!<%= yeoman.app %>/index.html',
+              '!<%= yeoman.app %>/modules.html',
+              '!<%= yeoman.app %>/404.html']
+    }
 }
 ```
 
@@ -86,7 +86,7 @@ Default file for storing validation information.
 Type: `String` <br/>
 Default value: `validation-report.json`
 
-Consolidated report in JSON format, if reportpath is ``false`` it will not generated.
+Consolidated report in JSON format, if reportpath is `false` it will not generated.
 
 #### options.stoponerror
 Type: `Boolean` <br/>
@@ -124,7 +124,7 @@ example
   <head>
   </head>
   <body>
-  	<!-- CONTENT -->
+      <!-- CONTENT -->
   </body>
 </html>
 ```
@@ -135,19 +135,25 @@ example
 Type: `Array` <br/>
 Default value: ``
 
-Array of page paths to be validated. When remote files are not present validator will append file names from local folder. 'remotePath' is mandatory when this option is specified.
+Array of page paths to be validated. When remote files are not present validator will append file names from local folder. `remotePath` is mandatory when this option is specified.
 
-eg: remoteFiles: ["html/moving-from-wordpress-to-octopress/",
-											"css/site-preloading-methods/"]
-
-you can also provide a file contains array of pages.
-
-remoteFiles: "validation-files.json"
+eg:
 
 ```js
-["html/getting-started-with-yeoman-1-dot-0-beta-on-windows",
-"html/slidemote-universal-remote-control-for-html5-presentations/",
-"html/simple-responsive-image-technique/"]
+remoteFiles: ['html/moving-from-wordpress-to-octopress/',
+              'css/site-preloading-methods/']
+```
+
+you can also provide a file that contains an array of pages.
+
+```js
+remoteFiles: 'validation-files.json'
+```
+
+```js
+['html/getting-started-with-yeoman-1-dot-0-beta-on-windows',
+'html/slidemote-universal-remote-control-for-html5-presentations/',
+'html/simple-responsive-image-technique/']
 ```
 
 #### options.relaxerror
@@ -157,7 +163,8 @@ Default value: ``
 Helps to skip certain w3c errors messages from validation. Give exact error message or a regular expression in an array & validator will ignore those relaxed errors from validation.
 
 ```js
-relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta.","document type does not allow element \"[A-Z]+\" here"]
+relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.',
+             'document type does not allow element "[A-Z]+" here']
 ```
 
 #### options.doctype
@@ -166,32 +173,32 @@ Default value: `false`
 
 Set `false` for autodetect or chose one of this options:
 
-- ``HTML5``
-- ``XHTML 1.0 Strict``
-- ``XHTML 1.0 Transitional``
-- ``XHTML 1.0 Frameset``
-- ``HTML 4.01 Strict``
-- ``HTML 4.01 Transitional``
-- ``HTML 4.01 Frameset``
-- ``HTML 4.01 + RDFa 1.1``
-- ``HTML 3.2``
-- ``HTML 2.0``
-- ``ISO/IEC 15445:2000 ("ISO HTML")``
-- ``XHTML 1.1``
-- ``XHTML + RDFa``
-- ``XHTML Basic 1.0``
-- ``XHTML Basic 1.1``
-- ``XHTML Mobile Profile 1.2``
-- ``XHTML-Print 1.0``
-- ``XHTML 1.1 plus MathML 2.0``
-- ``XHTML 1.1 plus MathML 2.0 plus SVG 1.1``
-- ``MathML 2.0``
-- ``SVG 1.0``
-- ``SVG 1.1``
-- ``SVG 1.1 Tiny``
-- ``SVG 1.1 Basic``
-- ``SMIL 1.0``
-- ``SMIL 2.0``
+- `HTML5`
+- `XHTML 1.0 Strict`
+- `XHTML 1.0 Transitional`
+- `XHTML 1.0 Frameset`
+- `HTML 4.01 Strict`
+- `HTML 4.01 Transitional`
+- `HTML 4.01 Frameset`
+- `HTML 4.01 + RDFa 1.1`
+- `HTML 3.2`
+- `HTML 2.0`
+- `ISO/IEC 15445:2000 ("ISO HTML")`
+- `XHTML 1.1`
+- `XHTML + RDFa`
+- `XHTML Basic 1.0`
+- `XHTML Basic 1.1`
+- `XHTML Mobile Profile 1.2`
+- `XHTML-Print 1.0`
+- `XHTML 1.1 plus MathML 2.0`
+- `XHTML 1.1 plus MathML 2.0 plus SVG 1.1`
+- `MathML 2.0`
+- `SVG 1.0`
+- `SVG 1.1`
+- `SVG 1.1 Tiny`
+- `SVG 1.1 Basic`
+- `SMIL 1.0`
+- `SMIL 2.0`
 
 
 #### options.charset
@@ -200,46 +207,46 @@ Default value: `false`
 
 Set `false` for autodetect or chose one of this options:
 
-- ``utf-8``
-- ``utf-16``
-- ``iso-8859-1``
-- ``iso-8859-2``
-- ``iso-8859-3``
-- ``iso-8859-4``
-- ``iso-8859-5``
-- ``iso-8859-6-i``
-- ``iso-8859-7``
-- ``iso-8859-8``
-- ``iso-8859-8-i``
-- ``iso-8859-9``
-- ``iso-8859-10``
-- ``iso-8859-11``
-- ``iso-8859-13``
-- ``iso-8859-14``
-- ``iso-8859-15``
-- ``iso-8859-16``
-- ``us-ascii``
-- ``euc-jp``
-- ``shift_jis``
-- ``iso-2022-jp``
-- ``euc-kr``
-- ``gb2312``
-- ``gb18030``
-- ``big5``
-- ``big5-HKSCS``
-- ``tis-620``
-- ``koi8-r``
-- ``koi8-u``
-- ``iso-ir-111``
-- ``macintosh``
-- ``windows-1250``
-- ``windows-1251``
-- ``windows-1252``
-- ``windows-1253``
-- ``windows-1254``
-- ``windows-1255``
-- ``windows-1256``
-- ``windows-1257``
+- `utf-8`
+- `utf-16`
+- `iso-8859-1`
+- `iso-8859-2`
+- `iso-8859-3`
+- `iso-8859-4`
+- `iso-8859-5`
+- `iso-8859-6-i`
+- `iso-8859-7`
+- `iso-8859-8`
+- `iso-8859-8-i`
+- `iso-8859-9`
+- `iso-8859-10`
+- `iso-8859-11`
+- `iso-8859-13`
+- `iso-8859-14`
+- `iso-8859-15`
+- `iso-8859-16`
+- `us-ascii`
+- `euc-jp`
+- `shift_jis`
+- `iso-2022-jp`
+- `euc-kr`
+- `gb2312`
+- `gb18030`
+- `big5`
+- `big5-HKSCS`
+- `tis-620`
+- `koi8-r`
+- `koi8-u`
+- `iso-ir-111`
+- `macintosh`
+- `windows-1250`
+- `windows-1251`
+- `windows-1252`
+- `windows-1253`
+- `windows-1254`
+- `windows-1255`
+- `windows-1256`
+- `windows-1257`
 
 #### options.failHard
 Type: `boolean` <br/>
