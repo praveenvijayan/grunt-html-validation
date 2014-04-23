@@ -110,6 +110,7 @@ module.exports = function (grunt) {
                 // fix: Fatal error: Unable to read 'undefined' file (Error code: ENOENT).
                 if (!files[counter]) {
                     done();
+                    return;
                 }
 
 
