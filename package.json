@@ -1,47 +1,45 @@
 {
-  "name": "grunt-html-validation",
-  "description": "W3C html validation grunt plugin",
-  "version": "0.1.16",
-  "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
-  "author": "praveenvijayan <praveenv.vijayan@gmail.com> (http://decodize.com)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/praveenvijayan/grunt-html-validation.git"
-  },
-  "bugs": {
-    "url": "https://github.com/praveenvijayan/grunt-html-validation/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/praveenvijayan/grunt-html-validation/blob/master/LICENSE-MIT"
-    }
-  ],
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.1"
-  },
-  "dependencies": {
-    "colors": "~0.6.0",
-    "request": "~2.34.0",
-    "w3cjs": "~0.1.22"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-nodeunit": "~0.3.3"
-  },
-  "keywords": [
-    "gruntplugin"
-  ],
-  "files": [
-    "tasks",
-    "LICENSE-MIT"
-  ]
+    "name": "grunt-html-validation",
+    "description": "W3C html validation grunt plugin",
+    "version": "0.1.17",
+    "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
+    "author": "praveenvijayan <praveenv.vijayan@gmail.com> (http://decodize.com)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/praveenvijayan/grunt-html-validation.git"
+    },
+    "bugs": {
+        "url": "https://github.com/praveenvijayan/grunt-html-validation/issues"
+    },
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://github.com/praveenvijayan/grunt-html-validation/blob/master/LICENSE-MIT"
+    }],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.1"
+    },
+    "dependencies": {
+        "colors": "~0.6.0",
+        "request": "~2.34.0",
+        "w3cjs": "~0.1.22"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-jshint": "~0.10.0",
+        "grunt-contrib-nodeunit": "~0.3.3"
+    },
+    "keywords": [
+        "gruntplugin"
+    ],
+    "files": [
+        "tasks",
+        "LICENSE-MIT"
+    ]
 }
