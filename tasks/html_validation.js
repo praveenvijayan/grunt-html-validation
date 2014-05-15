@@ -239,6 +239,9 @@ module.exports = function (grunt) {
                                 }
                             }
                             done();
+                            if (!options.remoteFiles) {
+                                return;
+                            }
                         }
 
                         if (options.remoteFiles) {
