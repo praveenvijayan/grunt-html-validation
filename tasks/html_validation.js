@@ -192,7 +192,8 @@ module.exports = function (grunt) {
                                 if (!chkRelaxError) {
                                     errorCount = errorCount + 1;
                                     console.log(errorCount + '=> '.warn + JSON.stringify(res.messages[prop].message).help +
-                                        ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine).prompt
+                                        (prompt ? ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine).prompt : 
+                                        ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine))
                                     );
                                 }
 
