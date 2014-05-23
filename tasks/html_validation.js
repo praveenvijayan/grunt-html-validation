@@ -193,7 +193,7 @@ module.exports = function (grunt) {
                                     errorCount = errorCount + 1;
 
                                     var lineNumber = ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine);
-                                    if (typeof(prompt) !== "undefined" && prompt) {
+                                    if (typeof(prompt) !== 'undefined') {
                                         lineNumber = lineNumber.prompt;
                                     }
 
