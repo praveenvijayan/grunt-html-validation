@@ -191,10 +191,13 @@ module.exports = function (grunt) {
 
                                 if (!chkRelaxError) {
                                     errorCount = errorCount + 1;
-                                    console.log(errorCount + '=> '.warn + JSON.stringify(res.messages[prop].message).help +
-                                        (prompt ? ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine).prompt : 
-                                        ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine))
-                                    );
+
+                                    var lineNumber = ' Line no: ' + JSON.stringify(options.wrapfile ? res.messages[prop].unwrapLine : res.messages[prop].lastLine);
+                                    if (typeof(prompt) !== "undefined" && prompt) {
+                                        lineNumber = lineNumber.prompt;
+                                    }
+
+                                    console.log(errorCount + '=> '.warn + JSON.stringify(res.messages[prop].message).help + lineNumber );
                                 }
 
                             }
