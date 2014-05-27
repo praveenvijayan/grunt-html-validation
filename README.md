@@ -260,7 +260,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/issues)
 
 ## Release History
- * 2014-05-15   v0.1.16  Fixes #50, #52
+ * 2014-05-27   v0.1.18  Version bump, Fixes #54
+ * 2014-05-15   v0.1.17  Fixes #50, #52
  * 2014-04-23   v0.1.16  Fixes  
  * 2014-04-03   v0.1.15  Updated dependencies (jshnt, nodeunit, request), gitignore, code cleanup etc.. 
  * 2014-03-23   v0.1.14  Updated with wrapfile & server url options.  
