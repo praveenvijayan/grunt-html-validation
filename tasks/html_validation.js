@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
     var w3cjs = require('w3cjs');
     var colors = require('colors');
-    var chalk = require('chalk');
+    // var chalk = require('chalk');
     var rval = require('./lib/remoteval');
 
     colors.setTheme({
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         });
 
         var done = this.async(),
-            files = grunt.file.expand(this.filesSrc),
+            files = this.files.expand ? grunt.file.expand(this.filesSrc) : this.filesSrc,
             flen = files.length,
             readSettings = {},
             isRelaxError = false;
