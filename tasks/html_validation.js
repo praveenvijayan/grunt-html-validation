@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         });
 
         var done = this.async(),
-            files = grunt.file.expand(this.filesSrc),
+            files = this.files.expand ? grunt.file.expand(this.filesSrc) : this.filesSrc,
             flen = files.length,
             readSettings = {},
             isRelaxError = false;
