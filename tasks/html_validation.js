@@ -54,6 +54,7 @@ module.exports = function (grunt) {
         var options = this.options({
             path: 'validation-status.json',
             reportpath: 'validation-report.json',
+            tempPath: '',
             reset: false,
             proxy: null,
             stoponerror: false,
@@ -254,7 +255,7 @@ module.exports = function (grunt) {
                                 return;
                             }
 
-                            rval(dummyFile[counter], function () {
+                            rval(dummyFile[counter], options.remotePath, options.tempPath, function () {
                                 validate(files);
                             });
 
@@ -297,7 +298,7 @@ module.exports = function (grunt) {
          * Note on Remote validation.
          *  W3Cjs supports remote file validation but due to some reasons it is not working as expected.
          *  Local file validation is working perfectly. To overcome this remote page is fetch using 'request'
-         *  npm module and write page content in '_tempvlidation.html' file and validates as local file.
+         *  npm module and write page content in a local html file and validates it.
          */
 
         if (!options.remotePath && options.remoteFiles) {
@@ -325,10 +326,10 @@ module.exports = function (grunt) {
             files = [];
 
             for (var i = 0; i < dummyFile.length; i++) {
-                files.push('_tempvlidation.html');
+                files.push(options.tempPath + '/' + '_' + dummyFile[i].replace(options.remotePath, '') + '.html');
             }
 
-            rval(dummyFile[counter], function () {
+            rval(dummyFile[counter], options.remotePath, options.tempPath, function () {
                 validate(files);
             });
 

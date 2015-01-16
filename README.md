@@ -104,6 +104,12 @@ Number of retries when network error occuers. Default case, after 3 reties valid
 Type: `String` <br/>
 Default value: ``
 
+#### options.tempPath
+Type: `String` <br/>
+Default value: ``
+
+When a remote path is used, this defines where the temporary html files are saved before they are validated.
+
 #### options.wrapfile
 Type: `String` <br/>
 Default value: ``

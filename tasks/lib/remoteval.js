@@ -10,7 +10,7 @@
 
 'use strict';
 
-module.exports = function remoteval (file, cb) {
+module.exports = function remoteval (file, remotePath, tempPath, cb) {
 
     var request = require('request');
     var grunt = require('grunt');
@@ -21,7 +21,7 @@ module.exports = function remoteval (file, cb) {
         }
 
         if (!error && response.statusCode === 200) {
-            grunt.file.write('_tempvlidation.html', body);
+            grunt.file.write(tempPath + '/' + '_' + file.replace(remotePath, '') + '.html', body);
             return cb(true);
         }
     });
