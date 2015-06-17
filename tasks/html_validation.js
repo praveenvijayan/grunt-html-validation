@@ -12,7 +12,6 @@ module.exports = function (grunt) {
 
     var w3cjs = require('w3cjs');
     var colors = require('colors');
-    var chalk = require('chalk');
     var rval = require('./lib/remoteval');
 
     colors.setTheme({
