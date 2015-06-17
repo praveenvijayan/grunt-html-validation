@@ -286,7 +286,7 @@ module.exports = function (grunt) {
         function checkRelaxError(error) {
             for (var i = 0, l = options.relaxerror.length; i < l; i++) {
                 var re = new RegExp(options.relaxerror[i], 'g');
-                if (re.test(error)) {
+                if (re.test(error) || options.relaxerror[i] === error) {
                     return true;
                 }
             }
