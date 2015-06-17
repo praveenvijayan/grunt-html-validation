@@ -12,7 +12,6 @@ module.exports = function (grunt) {
 
     var w3cjs = require('w3cjs');
     var colors = require('colors');
-    var chalk = require('chalk');
     var rval = require('./lib/remoteval');
 
     colors.setTheme({
@@ -287,7 +286,7 @@ module.exports = function (grunt) {
         function checkRelaxError(error) {
             for (var i = 0, l = options.relaxerror.length; i < l; i++) {
                 var re = new RegExp(options.relaxerror[i], 'g');
-                if (re.test(error)) {
+                if (re.test(error) || options.relaxerror[i] === error) {
                     return true;
                 }
             }
