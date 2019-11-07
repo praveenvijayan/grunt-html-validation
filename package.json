@@ -29,7 +29,7 @@
   "dependencies": {
     "chalk": "^0.5.1",
     "colors": "~0.6.2",
-    "request": "~2.40.0",
+    "request": "~2.88.0",
     "w3cjs": "~0.1.25"
   },
   "devDependencies": {
